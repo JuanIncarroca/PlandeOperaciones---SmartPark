@@ -1,597 +1,627 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-sans);background:transparent;padding:12px 4px}
-.main-title{text-align:center;font-size:15px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
-.main-sub{text-align:center;font-size:11px;color:var(--color-text-secondary);margin-bottom:14px}
-
-.tabs{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap}
-.tab{flex:1;min-width:100px;padding:9px 6px;border-radius:9px;border:none;cursor:pointer;font-family:var(--font-sans);font-size:11px;font-weight:500;transition:all .18s;text-align:center;outline:none;line-height:1.3}
-.tab.t1{background:#E1F5EE;color:#085041}
-.tab.t2{background:#EEEDFE;color:#3C3489}
-.tab.t3{background:#FAEEDA;color:#633806}
-.tab.t4{background:#FAECE7;color:#712B13}
-.tab.t5{background:#E6F1FB;color:#0C447C}
-.tab.active{filter:brightness(.86);box-shadow:0 2px 7px rgba(0,0,0,.12)}
-@media(prefers-color-scheme:dark){
-.tab.t1{background:#04342C;color:#9FE1CB}
-.tab.t2{background:#26215C;color:#AFA9EC}
-.tab.t3{background:#412402;color:#EF9F27}
-.tab.t4{background:#4A1B0C;color:#F09975}
-.tab.t5{background:#042C53;color:#85B7EB}
-}
-
-.panel{display:none}.panel.active{display:block}
-
-/* cards genéricos */
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:9px}
-.card{border-radius:10px;padding:12px 14px}
-.card-title{font-size:12px;font-weight:500;margin-bottom:7px}
-.card ul{list-style:none;padding:0}
-.card ul li{font-size:11px;line-height:1.6;padding-left:10px;position:relative;color:inherit;opacity:.88}
-.card ul li::before{content:"▸";position:absolute;left:0;font-size:10px;top:1px;opacity:.6}
-
-/* colores */
-.c-teal{background:#E1F5EE;color:#0F6E56}.c-teal .card-title{color:#04342C}
-.c-purple{background:#EEEDFE;color:#534AB7}.c-purple .card-title{color:#26215C}
-.c-amber{background:#FAEEDA;color:#854F0B}.c-amber .card-title{color:#412402}
-.c-coral{background:#FAECE7;color:#993C1D}.c-coral .card-title{color:#4A1B0C}
-.c-blue{background:#E6F1FB;color:#185FA5}.c-blue .card-title{color:#042C53}
-.c-green{background:#EAF3DE;color:#3B6D11}.c-green .card-title{color:#173404}
-.c-gray{background:var(--color-background-secondary);color:var(--color-text-secondary)}.c-gray .card-title{color:var(--color-text-primary)}
-@media(prefers-color-scheme:dark){
-.c-teal{background:#04342C;color:#9FE1CB}.c-teal .card-title{color:#E1F5EE}
-.c-purple{background:#26215C;color:#AFA9EC}.c-purple .card-title{color:#EEEDFE}
-.c-amber{background:#412402;color:#EF9F27}.c-amber .card-title{color:#FAEEDA}
-.c-coral{background:#4A1B0C;color:#F09975}.c-coral .card-title{color:#FAECE7}
-.c-blue{background:#042C53;color:#85B7EB}.c-blue .card-title{color:#E6F1FB}
-.c-green{background:#173404;color:#C0DD97}.c-green .card-title{color:#EAF3DE}
-}
-
-/* tabla proveedores */
-.ptable{width:100%;border-collapse:separate;border-spacing:0;border-radius:10px;overflow:hidden;font-size:11px}
-.ptable th{background:#FAEEDA;color:#633806;font-weight:500;padding:9px 11px;text-align:left}
-.ptable td{padding:8px 11px;color:var(--color-text-secondary);border-top:1px solid var(--color-border-tertiary)}
-.ptable tr:nth-child(odd) td{background:var(--color-background-secondary)}
-.ptable tr:nth-child(even) td{background:var(--color-background-primary)}
-.badge{display:inline-block;border-radius:5px;padding:1px 7px;font-size:10px;font-weight:500}
-.badge-hw{background:#E1F5EE;color:#085041}
-.badge-sw{background:#EEEDFE;color:#3C3489}
-.badge-sv{background:#FAEEDA;color:#633806}
-.badge-al{background:#FAECE7;color:#712B13}
-@media(prefers-color-scheme:dark){
-.ptable th{background:#412402;color:#FAEEDA}
-.badge-hw{background:#04342C;color:#9FE1CB}
-.badge-sw{background:#26215C;color:#AFA9EC}
-.badge-sv{background:#412402;color:#EF9F27}
-.badge-al{background:#4A1B0C;color:#F09975}
-}
-
-/* instalaciones grid */
-.inst-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.inst-card{border-radius:10px;padding:13px 14px}
-.inst-tag{display:inline-block;font-size:10px;font-weight:500;border-radius:5px;padding:2px 8px;margin-bottom:7px}
-.it-fisico{background:#E1F5EE;color:#085041}
-.it-digital{background:#EEEDFE;color:#3C3489}
-.it-cloud{background:#FAEEDA;color:#633806}
-.it-proto{background:#FAECE7;color:#712B13}
-@media(prefers-color-scheme:dark){
-.it-fisico{background:#04342C;color:#9FE1CB}
-.it-digital{background:#26215C;color:#AFA9EC}
-.it-cloud{background:#412402;color:#EF9F27}
-.it-proto{background:#4A1B0C;color:#F09975}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartPark Cusco - Informe 3ra Unidad</title>
+    <!-- Tailwind CSS para estilos rápidos y modernos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons para íconos modernos -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1e40af', // Blue 800
+                        secondary: '#0f172a', // Slate 900
+                        accent: '#10b981', // Emerald 500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Animación suave para el cambio de pestañas */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Ocultar barra de scroll en las pestañas */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
 </head>
-<body>
-<div class="main-title">Plan de Operaciones — SmartPark Cusco</div>
-<div class="main-sub">Procesos · Recursos · Proveedores · Instalaciones y Tecnología · Mapa de Proceso</div>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen">
 
-<div class="tabs">
-  <button class="tab t1 active" onclick="show('p1',this)">1. Procesos clave</button>
-  <button class="tab t2" onclick="show('p2',this)">2. Recursos</button>
-  <button class="tab t3" onclick="show('p3',this)">3. Proveedores</button>
-  <button class="tab t4" onclick="show('p4',this)">4. Instalaciones y tecnología</button>
-  <button class="tab t5" onclick="show('p5',this)">5. Mapa del proceso</button>
-</div>
+    <!-- Header Principal -->
+    <header class="bg-secondary text-white pt-10 pb-6 px-4 md:px-8 shadow-lg relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="max-w-6xl mx-auto relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="ph ph-car-profile text-4xl text-accent"></i>
+                    <h1 class="text-3xl md:text-4xl font-bold tracking-tight">SmartPark Cusco</h1>
+                </div>
+                <p class="text-slate-300 text-sm md:text-base max-w-2xl">
+                    Solución IoT para gestionar la disponibilidad de estacionamientos en el centro histórico de Cusco en tiempo real.
+                </p>
+            </div>
+            <div class="text-right text-xs md:text-sm text-slate-400 bg-slate-800/50 p-3 rounded-lg border border-slate-700 w-full md:w-auto">
+                <p class="font-semibold text-slate-200">Universidad Andina del Cusco</p>
+                <p>Gestión de la Innovación y Emprendimiento - 9A</p>
+                <p>Semestre: 2026-1</p>
+            </div>
+        </div>
+    </header>
 
-<!-- ===== 1. PROCESOS CLAVE ===== -->
-<div id="panel-p1" class="panel active">
-  <div class="grid2">
-    <div class="card c-teal">
-      <div class="card-title">P1 · Instalación de sensores IoT</div>
-      <ul>
-        <li>Montaje del microcontrolador ESP32 en cada espacio</li>
-        <li>Instalación de placas de presión en el suelo</li>
-        <li>Conexión de indicadores LED por espacio</li>
-        <li>Configuración de conectividad Wi-Fi local</li>
-        <li>Prueba de detección de vehículos en sitio</li>
-      </ul>
-    </div>
-    <div class="card c-purple">
-      <div class="card-title">P2 · Transmisión de datos en tiempo real</div>
-      <ul>
-        <li>ESP32 detecta ocupación del espacio vía sensor</li>
-        <li>Envía estado (libre / ocupado) a Firebase vía Wi-Fi</li>
-        <li>Firebase actualiza la base de datos en milisegundos</li>
-        <li>App móvil recibe la actualización en tiempo real</li>
-        <li>LED cambia de color según el estado del espacio</li>
-      </ul>
-    </div>
-    <div class="card c-amber">
-      <div class="card-title">P3 · Gestión de reservas (app)</div>
-      <ul>
-        <li>Usuario visualiza espacios disponibles en el mapa</li>
-        <li>Selecciona espacio y confirma reserva desde la app</li>
-        <li>Sistema bloquea el espacio para el usuario</li>
-        <li>Notificación push confirmando la reserva</li>
-        <li>Registro de tiempo de uso y generación de cobro</li>
-      </ul>
-    </div>
-    <div class="card c-blue">
-      <div class="card-title">P4 · Monitoreo y mantenimiento</div>
-      <ul>
-        <li>Supervisión continua del estado de sensores en campo</li>
-        <li>Revisión periódica de conectividad Wi-Fi</li>
-        <li>Actualización remota del firmware de los ESP32</li>
-        <li>Reemplazo preventivo de sensores defectuosos</li>
-        <li>Reporte manual de incidencias por canal digital</li>
-      </ul>
-    </div>
-    <div class="card c-coral">
-      <div class="card-title">P5 · Gestión de pagos e ingresos</div>
-      <ul>
-        <li>Cobro por comisión (≈10%) sobre cada reserva</li>
-        <li>Facturación mensual a estacionamientos afiliados</li>
-        <li>Gestión de créditos del programa de referidos</li>
-        <li>Conciliación de ingresos con la plataforma de pagos</li>
-        <li>Reportes financieros mensuales al equipo</li>
-      </ul>
-    </div>
-    <div class="card c-green">
-      <div class="card-title">P6 · Atención al cliente y mejora continua</div>
-      <ul>
-        <li>Soporte al usuario vía app (chat / reporte de errores)</li>
-        <li>Recolección de retroalimentación y calificaciones</li>
-        <li>Actualización de la app según feedback de usuarios</li>
-        <li>Ciclo Lean Startup: Crear → Medir → Aprender</li>
-        <li>Análisis de métricas de uso y ocupación</li>
-      </ul>
-    </div>
-  </div>
-</div>
+    <!-- Navegación por Pestañas -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 md:px-8">
+            <ul class="flex overflow-x-auto hide-scrollbar space-x-1 md:space-x-4 py-3" id="tabs-nav">
+                <li>
+                    <button onclick="openTab(event, 'resumen')" class="tab-btn active px-4 py-2 rounded-full font-medium text-sm transition-colors bg-primary text-white flex items-center gap-2 whitespace-nowrap">
+                        <i class="ph ph-article"></i> Resumen
+                    </button>
+                </li>
+                <li>
+                    <button onclick="openTab(event, 'procesos')" class="tab-btn px-4 py-2 rounded-full font-medium text-sm transition-colors text-slate-600 hover:bg-slate-100 flex items-center gap-2 whitespace-nowrap">
+                        <i class="ph ph-gear"></i> Procesos Clave
+                    </button>
+                </li>
+                <li>
+                    <button onclick="openTab(event, 'recursos')" class="tab-btn px-4 py-2 rounded-full font-medium text-sm transition-colors text-slate-600 hover:bg-slate-100 flex items-center gap-2 whitespace-nowrap">
+                        <i class="ph ph-cpu"></i> Recursos
+                    </button>
+                </li>
+                <li>
+                    <button onclick="openTab(event, 'proveedores')" class="tab-btn px-4 py-2 rounded-full font-medium text-sm transition-colors text-slate-600 hover:bg-slate-100 flex items-center gap-2 whitespace-nowrap">
+                        <i class="ph ph-handshake"></i> Proveedores
+                    </button>
+                </li>
+                <li>
+                    <button onclick="openTab(event, 'instalaciones')" class="tab-btn px-4 py-2 rounded-full font-medium text-sm transition-colors text-slate-600 hover:bg-slate-100 flex items-center gap-2 whitespace-nowrap">
+                        <i class="ph ph-buildings"></i> Instalaciones
+                    </button>
+                </li>
+                <li>
+                    <button onclick="openTab(event, 'mapa')" class="tab-btn px-4 py-2 rounded-full font-medium text-sm transition-colors text-slate-600 hover:bg-slate-100 flex items-center gap-2 whitespace-nowrap">
+                        <i class="ph ph-git-merge"></i> Mapa de Procesos
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-<!-- ===== 2. RECURSOS ===== -->
-<div id="panel-p2" class="panel">
-  <div class="grid3">
-    <div class="card c-teal">
-      <div class="card-title">Recursos físicos (hardware)</div>
-      <ul>
-        <li>Microcontroladores ESP32 (uno por espacio)</li>
-        <li>Placas / sensores de presión vehicular</li>
-        <li>Indicadores LED (verde = libre, rojo = ocupado)</li>
-        <li>Cableado y conectores eléctricos</li>
-        <li>Carcasas protectoras contra clima y vandalismo</li>
-        <li>Routers Wi-Fi para zonas piloto</li>
-        <li>Computadora de desarrollo y testing</li>
-      </ul>
-    </div>
-    <div class="card c-purple">
-      <div class="card-title">Recursos digitales (software)</div>
-      <ul>
-        <li>Aplicación móvil Android e iOS</li>
-        <li>Firebase Realtime Database (base de datos en nube)</li>
-        <li>Firebase Authentication (gestión de usuarios)</li>
-        <li>Simulador Wokwi para pruebas del MVP</li>
-        <li>Plataforma de pagos digital integrada</li>
-        <li>Panel de administración web para dueños</li>
-        <li>Herramientas de monitoreo y alertas en nube</li>
-      </ul>
-    </div>
-    <div class="card c-amber">
-      <div class="card-title">Recursos humanos</div>
-      <ul>
-        <li>Equipo de desarrollo IoT (firmware ESP32)</li>
-        <li>Desarrollador de app móvil (Android / iOS)</li>
-        <li>Administrador de base de datos Firebase</li>
-        <li>Técnico de instalación y mantenimiento en campo</li>
-        <li>Responsable de marketing digital</li>
-        <li>Gestor de alianzas y relaciones comerciales</li>
-        <li>Asesor académico de la UAC</li>
-      </ul>
-    </div>
-    <div class="card c-blue">
-      <div class="card-title">Recursos financieros</div>
-      <ul>
-        <li>Capital semilla inicial: S/ 15,000</li>
-        <li>Hardware: S/ 3,000</li>
-        <li>Software y desarrollo: S/ 4,000</li>
-        <li>Marketing digital: S/ 6,000</li>
-        <li>Otros costos operativos: S/ 2,000</li>
-        <li>Fondos Startup Perú / incubadoras UAC</li>
-        <li>Ingresos proyectados a partir del mes 3</li>
-      </ul>
-    </div>
-    <div class="card c-coral">
-      <div class="card-title">Recursos intangibles</div>
-      <ul>
-        <li>Conocimiento técnico en IoT y desarrollo móvil</li>
-        <li>Respaldo académico de la Universidad Andina del Cusco</li>
-        <li>Metodología Lean Startup validada con MVP</li>
-        <li>Alianzas estratégicas con estacionamientos</li>
-        <li>Marca SmartPark Cusco en construcción</li>
-        <li>Datos de ocupación generados por el sistema</li>
-      </ul>
-    </div>
-    <div class="card c-green">
-      <div class="card-title">Recursos de infraestructura</div>
-      <ul>
-        <li>Conectividad Wi-Fi en zonas piloto del centro</li>
-        <li>Servidores Firebase (Google Cloud)</li>
-        <li>Espacio físico en estacionamientos aliados</li>
-        <li>Acceso a tiendas Google Play y App Store</li>
-        <li>Dominio web y hosting del sitio informativo</li>
-      </ul>
-    </div>
-  </div>
-</div>
+    <!-- Contenido Principal -->
+    <main class="flex-grow max-w-6xl mx-auto w-full px-4 md:px-8 py-8">
 
-<!-- ===== 3. PROVEEDORES ===== -->
-<div id="panel-p3" class="panel">
-  <table class="ptable">
-    <thead>
-      <tr>
-        <th>Proveedor</th>
-        <th>Tipo</th>
-        <th>¿Qué provee?</th>
-        <th>Criticidad</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong style="font-weight:500">Tiendas electrónicas locales (Cusco / Lima)</strong></td>
-        <td><span class="badge badge-hw">Hardware</span></td>
-        <td>Microcontroladores ESP32, sensores de presión, LEDs, cableado y componentes electrónicos</td>
-        <td>Alta — base del sistema físico</td>
-      </tr>
-      <tr>
-        <td><strong style="font-weight:500">Google Firebase (Google Cloud)</strong></td>
-        <td><span class="badge badge-sw">Software / Nube</span></td>
-        <td>Base de datos en tiempo real, autenticación de usuarios, hosting del backend y notificaciones push</td>
-        <td>Muy alta — corazón del sistema</td>
-      </tr>
-      <tr>
-        <td><strong style="font-weight:500">Google Play Store / Apple App Store</strong></td>
-        <td><span class="badge badge-sw">Software</span></td>
-        <td>Distribución oficial de la app móvil para Android e iOS a los usuarios finales</td>
-        <td>Alta — canal de distribución</td>
-      </tr>
-      <tr>
-        <td><strong style="font-weight:500">Wokwi (simulador online)</strong></td>
-        <td><span class="badge badge-sw">Software</span></td>
-        <td>Simulación y prueba del firmware del ESP32 antes del despliegue físico en campo</td>
-        <td>Media — solo en fase MVP</td>
-      </tr>
-      <tr>
-        <td><strong style="font-weight:500">Proveedor de internet local (ISP Cusco)</strong></td>
-        <td><span class="badge badge-sv">Servicio</span></td>
-        <td>Conectividad Wi-Fi en las zonas piloto del centro histórico para los sensores ESP32</td>
-        <td>Alta — sin Wi-Fi no hay datos</td>
-      </tr>
-      <tr>
-        <td><strong style="font-weight:500">Plataforma de pagos (Yape / Plin / Stripe)</strong></td>
-        <td><span class="badge badge-sv">Servicio</span></td>
-        <td>Procesamiento de cobros por reserva, suscripciones y pagos por uso dentro de la app</td>
-        <td>Alta — monetización directa</td>
-      </tr>
-      <tr>
-        <td><strong style="font-weight:500">Municipalidad Provincial del Cusco</strong></td>
-        <td><span class="badge badge-al">Aliado</span></td>
-        <td>Permisos de instalación en vía pública, acceso a estacionamientos municipales y respaldo institucional</td>
-        <td>Alta — viabilidad regulatoria</td>
-      </tr>
-      <tr>
-        <td><strong style="font-weight:500">Dueños de estacionamientos privados</strong></td>
-        <td><span class="badge badge-al">Aliado</span></td>
-        <td>Espacio físico para instalar sensores, colaboración operativa y acceso a sus clientes</td>
-        <td>Muy alta — mercado principal</td>
-      </tr>
-      <tr>
-        <td><strong style="font-weight:500">Universidad Andina del Cusco (UAC)</strong></td>
-        <td><span class="badge badge-al">Aliado</span></td>
-        <td>Respaldo académico, fondos de emprendimiento universitario y entorno de prueba controlado</td>
-        <td>Media — soporte estratégico</td>
-      </tr>
-      <tr>
-        <td><strong style="font-weight:500">Meta (Facebook / Instagram Ads)</strong></td>
-        <td><span class="badge badge-sv">Servicio</span></td>
-        <td>Plataforma de publicidad digital segmentada para captación de usuarios en Cusco</td>
-        <td>Media — adquisición de usuarios</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+        <!-- 0. Resumen Ejecutivo -->
+        <section id="resumen" class="tab-content active">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-10 mb-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
+                    <i class="ph-fill ph-lightbulb text-9xl"></i>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold text-secondary mb-6 border-b border-slate-100 pb-4">Resumen Ejecutivo</h2>
+                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
+                    <p class="text-lg">
+                        El proyecto de startup tecnológica <strong>SmartPark Cusco</strong> corresponde a la Tercera Unidad del curso de Gestión de la Innovación y Emprendimiento. Aborda cinco dimensiones clave: procesos clave, recursos más importantes, principales proveedores, instalaciones y tecnología, y el mapa de procesos.
+                    </p>
+                    <div class="bg-indigo-50 border-l-4 border-primary p-4 rounded-r-lg mt-6">
+                        <p class="text-primary font-medium mb-2">¿Qué es SmartPark Cusco?</p>
+                        <p class="text-sm md:text-base">
+                            Es una solución <strong>IoT (Internet de las Cosas)</strong> que integra sensores basados en <strong>ESP32</strong> con una aplicación móvil conectada a <strong>Firebase</strong>. Su objetivo es gestionar la disponibilidad de estacionamientos en el centro histórico de Cusco en tiempo real. Sigue la metodología <em>Lean Startup</em> con un Producto Mínimo Viable (MVP) validado mediante el simulador Wokwi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<!-- ===== 4. INSTALACIONES Y TECNOLOGÍA ===== -->
-<div id="panel-p4" class="panel">
-  <div class="inst-grid">
-    <div class="inst-card c-teal">
-      <span class="inst-tag it-fisico">Instalación física</span>
-      <div class="card-title">Zona piloto — centro histórico de Cusco</div>
-      <ul class="card-list" style="list-style:none;padding:0">
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Estacionamientos privados aliados alrededor de la Plaza de Armas</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Sensor ESP32 + placa de presión instalados en cada plaza de estacionamiento</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ LED indicador visible para el conductor al ingresar al espacio</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Router Wi-Fi instalado en el estacionamiento aliado</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Carcasa protectora resistente a clima andino y vandalismo</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Fuente de alimentación estable por espacio</li>
-      </ul>
-    </div>
-    <div class="inst-card c-purple">
-      <span class="inst-tag it-digital">Tecnología de hardware</span>
-      <div class="card-title">Sistema embebido ESP32</div>
-      <ul class="card-list" style="list-style:none;padding:0">
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Microcontrolador ESP32 de 32 bits con Wi-Fi y Bluetooth integrado</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Sensor de presión para detectar presencia de vehículo</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ LEDs bicolor (verde = libre / rojo = ocupado)</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Firmware programado en Arduino IDE / C++</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Sincronización horaria integrada (NTP)</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Prototipo validado en simulador Wokwi</li>
-      </ul>
-    </div>
-    <div class="inst-card c-amber">
-      <span class="inst-tag it-cloud">Infraestructura en nube</span>
-      <div class="card-title">Firebase — Google Cloud Platform</div>
-      <ul class="card-list" style="list-style:none;padding:0">
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Firebase Realtime Database: actualización de estados en milisegundos</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Firebase Authentication: registro y login de usuarios</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Firebase Cloud Messaging: notificaciones push a la app</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Firebase Hosting: alojamiento del panel web de administración</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Escalable sin necesidad de servidores propios</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Capa gratuita disponible para la fase piloto</li>
-      </ul>
-    </div>
-    <div class="inst-card c-blue">
-      <span class="inst-tag it-proto">Aplicación móvil</span>
-      <div class="card-title">App SmartPark Cusco</div>
-      <ul class="card-list" style="list-style:none;padding:0">
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Compatible con Android e iOS</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Mapa interactivo de disponibilidad en tiempo real</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Módulo de reserva y pago integrado</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Panel de créditos y programa de referidos</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Historial de reservas y tiempo de uso</li>
-        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Distribuida en Google Play Store y App Store</li>
-      </ul>
-    </div>
-  </div>
-</div>
+        <!-- 1. Procesos Clave -->
+        <section id="procesos" class="tab-content">
+            <h2 class="text-2xl font-bold text-secondary mb-6 flex items-center gap-2">
+                <i class="ph-fill ph-gear text-primary"></i> 1. Identificación de los Procesos Clave
+            </h2>
+            <p class="text-slate-600 mb-8">Los procesos se organizan en cuatro niveles según su naturaleza e impacto en el modelo de negocio, permitiendo gestionar desde el MVP hasta el escalamiento.</p>
 
-<!-- ===== 5. MAPA DEL PROCESO ===== -->
-<div id="panel-p5" class="panel">
-  <svg width="100%" viewBox="0 0 680 820" role="img">
-    <title>Mapa del proceso SmartPark Cusco</title>
-    <desc>Diagrama de flujo del proceso operativo de SmartPark Cusco desde la instalación hasta el cobro</desc>
-    <defs>
-      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </marker>
-    </defs>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <!-- Estratégicos -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-primary transition-colors">
+                    <div class="flex items-center gap-3 mb-4 text-primary">
+                        <div class="p-2 bg-indigo-100 rounded-lg"><i class="ph ph-strategy text-xl"></i></div>
+                        <h3 class="font-bold text-lg">1.1 Procesos Estratégicos</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-accent mt-0.5"></i> <span><strong>Planificación estratégica:</strong> Metas por periodo con apoyo de la UAC.</span></li>
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-accent mt-0.5"></i> <span><strong>Gestión de alianzas:</strong> Negociación con Municipalidad, Cámara de Comercio, UAC y gremios.</span></li>
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-accent mt-0.5"></i> <span><strong>Innovación IoT:</strong> Actualización de firmware ESP32 y arquitectura Firebase.</span></li>
+                    </ul>
+                </div>
 
-    <!-- Carriles de actores -->
-    <!-- Labels carriles -->
-    <rect x="10" y="44" width="80" height="740" rx="8" fill="#E1F5EE" opacity=".35"/>
-    <rect x="96" y="44" width="120" height="740" rx="8" fill="#EEEDFE" opacity=".30"/>
-    <rect x="222" y="44" width="130" height="740" rx="8" fill="#FAEEDA" opacity=".28"/>
-    <rect x="358" y="44" width="120" height="740" rx="8" fill="#E6F1FB" opacity=".28"/>
-    <rect x="484" y="44" width="182" height="740" rx="8" fill="#EAF3DE" opacity=".28"/>
+                <!-- Operativos Core -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-primary transition-colors">
+                    <div class="flex items-center gap-3 mb-4 text-amber-600">
+                        <div class="p-2 bg-amber-100 rounded-lg"><i class="ph ph-engine text-xl"></i></div>
+                        <h3 class="font-bold text-lg">1.2 Procesos Operativos Core</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-amber-500 mt-0.5"></i> <span><strong>Detección de vehículos:</strong> Sensor envía señal al ESP32.</span></li>
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-amber-500 mt-0.5"></i> <span><strong>Transmisión de datos:</strong> ESP32 actualiza Firebase vía Wi-Fi.</span></li>
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-amber-500 mt-0.5"></i> <span><strong>Visualización & Reserva:</strong> App muestra disponibilidad; usuario reserva.</span></li>
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-amber-500 mt-0.5"></i> <span><strong>Cobro y liquidación:</strong> Calcula tarifa y liquida 10% de comisión.</span></li>
+                    </ul>
+                </div>
 
-    <text class="th" x="50" y="32" text-anchor="middle" font-size="11">Sensor</text>
-    <text class="ts" x="50" y="44" text-anchor="middle">ESP32</text>
-    <text class="th" x="156" y="32" text-anchor="middle" font-size="11">Firebase</text>
-    <text class="ts" x="156" y="44" text-anchor="middle">Nube</text>
-    <text class="th" x="287" y="32" text-anchor="middle" font-size="11">App Móvil</text>
-    <text class="ts" x="287" y="44" text-anchor="middle">Usuario</text>
-    <text class="th" x="418" y="32" text-anchor="middle" font-size="11">Conductor</text>
-    <text class="ts" x="418" y="44" text-anchor="middle">Cliente</text>
-    <text class="th" x="575" y="32" text-anchor="middle" font-size="11">Admin /</text>
-    <text class="ts" x="575" y="44" text-anchor="middle">Estacionamiento</text>
+                <!-- Soporte -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-primary transition-colors">
+                    <div class="flex items-center gap-3 mb-4 text-emerald-600">
+                        <div class="p-2 bg-emerald-100 rounded-lg"><i class="ph ph-lifebuoy text-xl"></i></div>
+                        <h3 class="font-bold text-lg">1.3 Procesos de Soporte</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-emerald-500 mt-0.5"></i> <span><strong>Marketing digital:</strong> Redes sociales y Meta Ads (S/ 400/mes).</span></li>
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-emerald-500 mt-0.5"></i> <span><strong>Soporte técnico:</strong> Atención ante fallas vía WhatsApp o web.</span></li>
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-emerald-500 mt-0.5"></i> <span><strong>Reportes y finanzas:</strong> Dashboards de ocupación y seguimiento de flujo de caja.</span></li>
+                    </ul>
+                </div>
 
-    <!-- PASO 1: Instalación -->
-    <g class="c-teal">
-      <rect x="484" y="64" width="178" height="44" rx="8" stroke-width="0.5"/>
-      <text class="th" x="573" y="86" text-anchor="middle" dominant-baseline="central">Instala sensores ESP32</text>
-    </g>
+                <!-- Mejora Continua -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-primary transition-colors">
+                    <div class="flex items-center gap-3 mb-4 text-purple-600">
+                        <div class="p-2 bg-purple-100 rounded-lg"><i class="ph ph-arrows-clockwise text-xl"></i></div>
+                        <h3 class="font-bold text-lg">1.4 Mejora Continua (Lean Startup)</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-purple-500 mt-0.5"></i> <span><strong>Crear:</strong> Desarrollo e instalación del MVP piloto.</span></li>
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-purple-500 mt-0.5"></i> <span><strong>Medir:</strong> Recopilación de KPIs (reservas, tasa abandono).</span></li>
+                        <li class="flex gap-2"><i class="ph-fill ph-check-circle text-purple-500 mt-0.5"></i> <span><strong>Aprender y Escalar:</strong> Análisis de feedback y expansión a Arequipa o Puno.</span></li>
+                    </ul>
+                </div>
+            </div>
 
-    <!-- PASO 2: Sensor detecta -->
-    <line x1="573" y1="108" x2="573" y2="128" stroke="#1D9E75" stroke-width="1.2" marker-end="url(#arr)"/>
-    <line x1="573" y1="128" x2="50" y2="128" stroke="#1D9E75" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-teal">
-      <rect x="14" y="136" width="72" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="50" y="156" text-anchor="middle" dominant-baseline="central">Detecta</text>
-      <text class="ts" x="50" y="174" text-anchor="middle">vehículo</text>
-    </g>
+            <!-- Tabla 1 -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-8">
+                <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                    <h3 class="font-bold text-slate-800">Tabla 1. Resumen de Procesos Clave</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-slate-600">
+                        <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                            <tr>
+                                <th class="px-6 py-3">Proceso</th>
+                                <th class="px-6 py-3">Descripción</th>
+                                <th class="px-6 py-3">Responsable / Herramienta</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Detección de vehículos</td>
+                                <td class="px-6 py-4">Sensor de presión detecta si un espacio está ocupado y envía señal al ESP32.</td>
+                                <td class="px-6 py-4">Sensor + Microcontrolador ESP32</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Transmisión de datos</td>
+                                <td class="px-6 py-4">El ESP32 envía el estado del espacio (libre/ocupado) a la nube vía Wi-Fi.</td>
+                                <td class="px-6 py-4">ESP32 + Firebase Realtime DB</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Visualización en app</td>
+                                <td class="px-6 py-4">El usuario ve en tiempo real el mapa de disponibilidad de espacios.</td>
+                                <td class="px-6 py-4">App móvil (Android / iOS)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Reserva de espacio</td>
+                                <td class="px-6 py-4">El conductor selecciona y reserva un espacio desde la aplicación.</td>
+                                <td class="px-6 py-4">App + Firebase + Notificaciones</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Cobro y liquidación</td>
+                                <td class="px-6 py-4">Se registra el tiempo de uso, se calcula la tarifa y se liquida la comisión.</td>
+                                <td class="px-6 py-4">App + Pasarela de pago</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Soporte técnico</td>
+                                <td class="px-6 py-4">Atención ante fallas de sensores, app o conectividad.</td>
+                                <td class="px-6 py-4">Equipo técnico + Canal de reporte</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Marketing y captación</td>
+                                <td class="px-6 py-4">Publicación de contenidos y anuncios en redes sociales.</td>
+                                <td class="px-6 py-4">Equipo marketing + Meta Ads</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Mejora continua</td>
+                                <td class="px-6 py-4">Ciclo Lean: medir KPIs, recopilar feedback y actualizar el sistema.</td>
+                                <td class="px-6 py-4">Equipo completo (Lean Startup)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-    <!-- PASO 3: ESP32 envía a Firebase -->
-    <line x1="86" y1="162" x2="100" y2="162" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-purple">
-      <rect x="100" y="136" width="112" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="156" y="156" text-anchor="middle" dominant-baseline="central">Actualiza estado</text>
-      <text class="ts" x="156" y="174" text-anchor="middle">libre / ocupado</text>
-    </g>
+        <!-- 2. Recursos -->
+        <section id="recursos" class="tab-content">
+            <h2 class="text-2xl font-bold text-secondary mb-6 flex items-center gap-2">
+                <i class="ph-fill ph-cpu text-primary"></i> 2. Identificación de los Recursos
+            </h2>
+            <p class="text-slate-600 mb-8">Clasificados en cuatro categorías vitales para esta startup tecnológica en etapa inicial, priorizando tecnología y talento humano.</p>
 
-    <!-- PASO 4: App recibe datos -->
-    <line x1="212" y1="162" x2="226" y2="162" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-amber">
-      <rect x="226" y="136" width="122" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="287" y="156" text-anchor="middle" dominant-baseline="central">Muestra mapa</text>
-      <text class="ts" x="287" y="174" text-anchor="middle">en tiempo real</text>
-    </g>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-blue-50 border border-blue-100 p-5 rounded-xl text-center">
+                    <i class="ph ph-microchip text-4xl text-blue-500 mb-3 mx-auto"></i>
+                    <h4 class="font-bold text-blue-900 mb-2">Tecnológicos</h4>
+                    <p class="text-xs text-blue-700">ESP32, Firebase (Spark Plan), Simulador Wokwi. Bajo costo y eficientes.</p>
+                </div>
+                <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-xl text-center">
+                    <i class="ph ph-users-three text-4xl text-indigo-500 mb-3 mx-auto"></i>
+                    <h4 class="font-bold text-indigo-900 mb-2">Humanos</h4>
+                    <p class="text-xs text-indigo-700">5 Ingenieros de Sistemas UAC (Firmware, App, Backend, Marketing).</p>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-100 p-5 rounded-xl text-center">
+                    <i class="ph ph-plug text-4xl text-emerald-500 mb-3 mx-auto"></i>
+                    <h4 class="font-bold text-emerald-900 mb-2">Físicos</h4>
+                    <p class="text-xs text-emerald-700">Cableado, sensores, fuentes 5V. Instalación sin obra civil (30-45 min).</p>
+                </div>
+                <div class="bg-amber-50 border border-amber-100 p-5 rounded-xl text-center">
+                    <i class="ph ph-money text-4xl text-amber-500 mb-3 mx-auto"></i>
+                    <h4 class="font-bold text-amber-900 mb-2">Financieros</h4>
+                    <p class="text-xs text-amber-700">Inversión inicial: S/ 15,000 (Hardware, software, marketing, soporte).</p>
+                </div>
+            </div>
 
-    <!-- PASO 5: Conductor ve la app -->
-    <line x1="348" y1="162" x2="362" y2="162" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-blue">
-      <rect x="362" y="136" width="112" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="418" y="156" text-anchor="middle" dominant-baseline="central">Ve espacios</text>
-      <text class="ts" x="418" y="174" text-anchor="middle">disponibles</text>
-    </g>
+            <!-- Tabla 2 -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                    <h3 class="font-bold text-slate-800">Tabla 2. Recursos Clave del Proyecto</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-slate-600">
+                        <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                            <tr>
+                                <th class="px-6 py-3 w-32">Categoría</th>
+                                <th class="px-6 py-3">Recurso</th>
+                                <th class="px-6 py-3 w-32">Costo Est.</th>
+                                <th class="px-6 py-3">Justificación</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900" rowspan="2">Tecnológico</td>
+                                <td class="px-6 py-4">Microcontroladores ESP32 (8 unds.)<br><span class="text-xs text-slate-400">Sensores de presión/proximidad</span></td>
+                                <td class="px-6 py-4 whitespace-nowrap">S/ 400-600<br><span class="text-xs text-slate-400">S/ 300-500</span></td>
+                                <td class="px-6 py-4">Núcleo del hardware IoT. Wi-Fi integrado, bajo costo y detectan presencia confiablemente.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4">Firebase Realtime DB<br><span class="text-xs text-slate-400">App móvil (Flutter / React Native)</span></td>
+                                <td class="px-6 py-4 whitespace-nowrap">S/ 0 (gratis)<br><span class="text-xs text-slate-400">S/ 4,000</span></td>
+                                <td class="px-6 py-4">Sincronización en tiempo real. Código único para Android e iOS reduce costos.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Tecnológico</td>
+                                <td class="px-6 py-4">Simulador Wokwi</td>
+                                <td class="px-6 py-4">S/ 0</td>
+                                <td class="px-6 py-4">Prototipar lógica del ESP32 sin hardware físico.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Humano</td>
+                                <td class="px-6 py-4">Equipo de 5 ingenieros</td>
+                                <td class="px-6 py-4">Equity / UAC</td>
+                                <td class="px-6 py-4">Cubren firmware, app móvil, backend, base de datos y marketing.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Físico</td>
+                                <td class="px-6 py-4">Cableado y fuentes 5V</td>
+                                <td class="px-6 py-4">S/ 200-400</td>
+                                <td class="px-6 py-4">Instalación piloto sin obra civil.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Financiero</td>
+                                <td class="px-6 py-4">Capital semilla inicial</td>
+                                <td class="px-6 py-4 font-bold text-accent">S/ 15,000</td>
+                                <td class="px-6 py-4">Cubre hasta el punto de equilibrio (8-12 meses).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-    <!-- flecha bajada conductor -->
-    <line x1="418" y1="188" x2="418" y2="228" stroke="#378ADD" stroke-width="1.2" marker-end="url(#arr)"/>
+        <!-- 3. Proveedores -->
+        <section id="proveedores" class="tab-content">
+            <h2 class="text-2xl font-bold text-secondary mb-6 flex items-center gap-2">
+                <i class="ph-fill ph-handshake text-primary"></i> 3. Principales Proveedores
+            </h2>
+            <p class="text-slate-600 mb-8">Seleccionados por bajo costo, flexibilidad y disponibilidad, evitando contratos a largo plazo antes del punto de equilibrio.</p>
 
-    <!-- PASO 6: Conductor selecciona espacio -->
-    <g class="c-blue">
-      <rect x="362" y="228" width="112" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="418" y="248" text-anchor="middle" dominant-baseline="central">Selecciona</text>
-      <text class="ts" x="418" y="266" text-anchor="middle">espacio</text>
-    </g>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+                <!-- Card Provider -->
+                <div class="bg-white p-4 border border-slate-200 rounded-xl flex items-center gap-4 hover:shadow-md transition">
+                    <div class="bg-slate-100 p-3 rounded-full text-slate-700"><i class="ph ph-shopping-cart text-2xl"></i></div>
+                    <div>
+                        <p class="font-bold text-sm">Siglo 21 / MercadoLibre</p>
+                        <p class="text-xs text-slate-500">Hardware (ESP32, Sensores)</p>
+                    </div>
+                </div>
+                <!-- Card Provider -->
+                <div class="bg-white p-4 border border-slate-200 rounded-xl flex items-center gap-4 hover:shadow-md transition">
+                    <div class="bg-amber-100 p-3 rounded-full text-amber-600"><i class="ph ph-cloud-check text-2xl"></i></div>
+                    <div>
+                        <p class="font-bold text-sm">Google Firebase</p>
+                        <p class="text-xs text-slate-500">Cloud / Backend (Plan Spark)</p>
+                    </div>
+                </div>
+                <!-- Card Provider -->
+                <div class="bg-white p-4 border border-slate-200 rounded-xl flex items-center gap-4 hover:shadow-md transition">
+                    <div class="bg-blue-100 p-3 rounded-full text-blue-600"><i class="ph ph-wifi-high text-2xl"></i></div>
+                    <div>
+                        <p class="font-bold text-sm">Claro / Movistar</p>
+                        <p class="text-xs text-slate-500">Conectividad Backup (Chips SIM)</p>
+                    </div>
+                </div>
+                <!-- Card Provider -->
+                <div class="bg-white p-4 border border-slate-200 rounded-xl flex items-center gap-4 hover:shadow-md transition">
+                    <div class="bg-emerald-100 p-3 rounded-full text-emerald-600"><i class="ph ph-google-play-logo text-2xl"></i></div>
+                    <div>
+                        <p class="font-bold text-sm">Play Store / App Store</p>
+                        <p class="text-xs text-slate-500">Distribución App Móvil</p>
+                    </div>
+                </div>
+                <!-- Card Provider -->
+                <div class="bg-white p-4 border border-slate-200 rounded-xl flex items-center gap-4 hover:shadow-md transition">
+                    <div class="bg-indigo-100 p-3 rounded-full text-indigo-600"><i class="ph ph-megaphone text-2xl"></i></div>
+                    <div>
+                        <p class="font-bold text-sm">Meta Ads / TikTok Ads</p>
+                        <p class="text-xs text-slate-500">Publicidad Digital</p>
+                    </div>
+                </div>
+                <!-- Card Provider -->
+                <div class="bg-white p-4 border border-slate-200 rounded-xl flex items-center gap-4 hover:shadow-md transition">
+                    <div class="bg-red-100 p-3 rounded-full text-red-600"><i class="ph ph-bank text-2xl"></i></div>
+                    <div>
+                        <p class="font-bold text-sm">UAC (Universidad)</p>
+                        <p class="text-xs text-slate-500">Aliado Institucional / Labs</p>
+                    </div>
+                </div>
+            </div>
 
-    <!-- flecha a app -->
-    <line x1="362" y1="254" x2="350" y2="254" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+            <!-- Tabla 3 -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-slate-600">
+                        <thead class="text-xs text-slate-700 uppercase bg-slate-50 border-b border-slate-200">
+                            <tr>
+                                <th class="px-6 py-3">Proveedor</th>
+                                <th class="px-6 py-3">Categoría</th>
+                                <th class="px-6 py-3">Lo que provee</th>
+                                <th class="px-6 py-3">Costo / Modalidad</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-3 font-medium">Siglo 21 / MercadoLibre PE</td>
+                                <td class="px-6 py-3"><span class="px-2 py-1 bg-slate-100 rounded text-xs">Hardware</span></td>
+                                <td class="px-6 py-3">ESP32, sensores, cables, resistencias, LEDs</td>
+                                <td class="px-6 py-3">S/ 25-40 por ESP32.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-3 font-medium">Google Firebase</td>
+                                <td class="px-6 py-3"><span class="px-2 py-1 bg-slate-100 rounded text-xs">Cloud</span></td>
+                                <td class="px-6 py-3">BD tiempo real, auth, hosting</td>
+                                <td class="px-6 py-3 text-accent font-medium">Gratuito (MVP)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-3 font-medium">Claro / Movistar Peru</td>
+                                <td class="px-6 py-3"><span class="px-2 py-1 bg-slate-100 rounded text-xs">Conexión</span></td>
+                                <td class="px-6 py-3">Red Wi-Fi aliada o chip SIM</td>
+                                <td class="px-6 py-3">S/ 40-70/mes</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-3 font-medium">Google Play & App Store</td>
+                                <td class="px-6 py-3"><span class="px-2 py-1 bg-slate-100 rounded text-xs">Distribución</span></td>
+                                <td class="px-6 py-3">Publicación app móvil</td>
+                                <td class="px-6 py-3">USD 25 / USD 99 anual</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-3 font-medium">Meta Ads & TikTok</td>
+                                <td class="px-6 py-3"><span class="px-2 py-1 bg-slate-100 rounded text-xs">Marketing</span></td>
+                                <td class="px-6 py-3">Anuncios segmentados Cusco</td>
+                                <td class="px-6 py-3">S/ 2,500 (primeros 6m)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-3 font-medium">Univ. Andina del Cusco</td>
+                                <td class="px-6 py-3"><span class="px-2 py-1 bg-slate-100 rounded text-xs">Institucional</span></td>
+                                <td class="px-6 py-3">Labs, fondos, validación</td>
+                                <td class="px-6 py-3 text-accent font-medium">Sin costo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-    <!-- PASO 7: App gestiona reserva -->
-    <g class="c-amber">
-      <rect x="226" y="228" width="122" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="287" y="248" text-anchor="middle" dominant-baseline="central">Gestiona reserva</text>
-      <text class="ts" x="287" y="266" text-anchor="middle">y bloquea espacio</text>
-    </g>
+        <!-- 4. Instalaciones -->
+        <section id="instalaciones" class="tab-content">
+            <h2 class="text-2xl font-bold text-secondary mb-6 flex items-center gap-2">
+                <i class="ph-fill ph-buildings text-primary"></i> 4. Instalaciones y Tecnología
+            </h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Instalaciones Físicas -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800 border-b pb-2"><i class="ph ph-map-pin text-primary"></i> Instalaciones Físicas</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <h4 class="font-bold text-sm text-slate-700">Sede Desarrollo (Opción MVP Recomendada)</h4>
+                            <p class="text-sm text-slate-600 mt-1"><strong>Laboratorio UAC:</strong> Costo cero por alianza. Acceso a equipos, internet y apoyo institucional.</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <h4 class="font-bold text-sm text-slate-700">Sede Desarrollo (Opción Post-MVP)</h4>
+                            <p class="text-sm text-slate-600 mt-1"><strong>Coworking Cusco:</strong> S/ 150-400 por escritorio. Incluye servicios y dirección fiscal.</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <h4 class="font-bold text-sm text-slate-700">Instalación en Campo (Piloto)</h4>
+                            <p class="text-sm text-slate-600 mt-1">Estacionamiento privado en centro histórico (ej. Av. El Sol). Instalación de sensores en 30-45 min sin obras.</p>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- flecha a Firebase -->
-    <line x1="226" y1="254" x2="214" y2="254" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+                <!-- Capas Tecnológicas -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800 border-b pb-2"><i class="ph ph-stack text-primary"></i> 4 Capas Tecnológicas</h3>
+                    
+                    <ul class="relative border-l border-slate-200 ml-3 space-y-5">
+                        <li class="pl-6 relative">
+                            <span class="absolute -left-3.5 top-1 flex items-center justify-center w-7 h-7 bg-blue-100 rounded-full text-blue-600 border-4 border-white"><i class="ph-fill ph-microchip"></i></span>
+                            <h4 class="font-bold text-slate-800 text-sm">1. Capa Física (Hardware IoT)</h4>
+                            <p class="text-xs text-slate-600 mt-1">Microcontroladores ESP32 (32 bits, Wi-Fi, BT). Sensores de presión/ultrasónicos y LEDs indicadores in-situ.</p>
+                        </li>
+                        <li class="pl-6 relative">
+                            <span class="absolute -left-3.5 top-1 flex items-center justify-center w-7 h-7 bg-emerald-100 rounded-full text-emerald-600 border-4 border-white"><i class="ph-fill ph-wifi-high"></i></span>
+                            <h4 class="font-bold text-slate-800 text-sm">2. Capa de Conectividad</h4>
+                            <p class="text-xs text-slate-600 mt-1">Red Wi-Fi local mediante protocolo HTTP REST. Latencia de 200-500ms para experiencia fluida.</p>
+                        </li>
+                        <li class="pl-6 relative">
+                            <span class="absolute -left-3.5 top-1 flex items-center justify-center w-7 h-7 bg-amber-100 rounded-full text-amber-600 border-4 border-white"><i class="ph-fill ph-database"></i></span>
+                            <h4 class="font-bold text-slate-800 text-sm">3. Capa de Backend</h4>
+                            <p class="text-xs text-slate-600 mt-1">Firebase Realtime DB (JSON estructurado). Firebase Auth para usuarios (Google/Facebook).</p>
+                        </li>
+                        <li class="pl-6 relative">
+                            <span class="absolute -left-3.5 top-1 flex items-center justify-center w-7 h-7 bg-purple-100 rounded-full text-purple-600 border-4 border-white"><i class="ph-fill ph-device-mobile"></i></span>
+                            <h4 class="font-bold text-slate-800 text-sm">4. Capa de Presentación</h4>
+                            <p class="text-xs text-slate-600 mt-1">App móvil en Flutter (o React Native). Mapa en tiempo real, reservas, filtros y panel de calificación.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-    <!-- PASO 8: Firebase bloquea -->
-    <g class="c-purple">
-      <rect x="100" y="228" width="112" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="156" y="248" text-anchor="middle" dominant-baseline="central">Marca espacio</text>
-      <text class="ts" x="156" y="266" text-anchor="middle">como reservado</text>
-    </g>
+        <!-- 5. Mapa de Procesos y Conclusiones -->
+        <section id="mapa" class="tab-content">
+            <h2 class="text-2xl font-bold text-secondary mb-6 flex items-center gap-2">
+                <i class="ph-fill ph-git-merge text-primary"></i> 5. Mapa de Procesos
+            </h2>
+            
+            <p class="text-slate-600 mb-6">El mapa representa de forma gráfica la totalidad de los procesos. Aquí detallamos el <strong>Flujo del Proceso Operativo Central</strong> (el viaje del usuario):</p>
 
-    <!-- flecha a ESP32 -->
-    <line x1="100" y1="254" x2="86" y2="254" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+            <!-- Flujo Gráfico Moderno -->
+            <div class="bg-white p-6 md:p-10 rounded-xl shadow-sm border border-slate-200 mb-10 overflow-x-auto hide-scrollbar">
+                <div class="flex items-center min-w-[800px] justify-between">
+                    
+                    <div class="flex flex-col items-center text-center w-32 relative">
+                        <div class="w-16 h-16 rounded-full bg-slate-100 border-2 border-slate-300 flex items-center justify-center text-2xl text-slate-600 mb-3 z-10 relative"><i class="ph-fill ph-device-mobile"></i></div>
+                        <p class="text-xs font-bold text-slate-700">1. App</p>
+                        <p class="text-[10px] text-slate-500 mt-1">Abre app y ve mapa real</p>
+                        <!-- Linea conectora -->
+                        <div class="absolute top-8 left-1/2 w-full h-0.5 bg-slate-300 z-0"></div>
+                    </div>
 
-    <!-- PASO 9: LED cambia -->
-    <g class="c-teal">
-      <rect x="14" y="228" width="72" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="50" y="248" text-anchor="middle" dominant-baseline="central">LED cambia</text>
-      <text class="ts" x="50" y="266" text-anchor="middle">a rojo</text>
-    </g>
+                    <div class="flex flex-col items-center text-center w-32 relative">
+                        <div class="w-16 h-16 rounded-full bg-blue-100 border-2 border-blue-400 flex items-center justify-center text-2xl text-blue-600 mb-3 z-10 relative"><i class="ph-fill ph-cursor-click"></i></div>
+                        <p class="text-xs font-bold text-slate-700">2. Reserva</p>
+                        <p class="text-[10px] text-slate-500 mt-1">Selecciona y reserva</p>
+                        <div class="absolute top-8 left-1/2 w-full h-0.5 bg-slate-300 z-0"></div>
+                    </div>
 
-    <!-- separador -->
-    <line x1="14" y1="300" x2="662" y2="300" stroke="var(--color-border-tertiary)" stroke-width="0.8" stroke-dasharray="4 3"/>
-    <text class="ts" x="340" y="316" text-anchor="middle" fill="#888780">— Conductor llega al estacionamiento —</text>
+                    <div class="flex flex-col items-center text-center w-32 relative">
+                        <div class="w-16 h-16 rounded-full bg-amber-100 border-2 border-amber-400 flex items-center justify-center text-2xl text-amber-600 mb-3 z-10 relative"><i class="ph-fill ph-cloud-arrow-up"></i></div>
+                        <p class="text-xs font-bold text-slate-700">3. Firebase</p>
+                        <p class="text-[10px] text-slate-500 mt-1">Actualiza y bloquea</p>
+                        <div class="absolute top-8 left-1/2 w-full h-0.5 bg-slate-300 z-0"></div>
+                    </div>
 
-    <!-- PASO 10: Conductor usa espacio -->
-    <line x1="418" y1="280" x2="418" y2="328" stroke="#378ADD" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-blue">
-      <rect x="362" y="328" width="112" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="418" y="348" text-anchor="middle" dominant-baseline="central">Ocupa el</text>
-      <text class="ts" x="418" y="366" text-anchor="middle">estacionamiento</text>
-    </g>
+                    <div class="flex flex-col items-center text-center w-32 relative">
+                        <div class="w-16 h-16 rounded-full bg-emerald-100 border-2 border-emerald-400 flex items-center justify-center text-2xl text-emerald-600 mb-3 z-10 relative"><i class="ph-fill ph-car"></i></div>
+                        <p class="text-xs font-bold text-slate-700">4. Entrada</p>
+                        <p class="text-[10px] text-slate-500 mt-1">Sensor detecta auto (LED rojo)</p>
+                        <div class="absolute top-8 left-1/2 w-full h-0.5 bg-slate-300 z-0"></div>
+                    </div>
 
-    <!-- PASO 11: ESP32 registra tiempo -->
-    <line x1="86" y1="280" x2="86" y2="354" stroke="#1D9E75" stroke-width="1.2"/>
-    <line x1="86" y1="354" x2="14" y2="354" stroke="#1D9E75" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-teal">
-      <rect x="14" y="328" width="72" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="50" y="348" text-anchor="middle" dominant-baseline="central">Registra</text>
-      <text class="ts" x="50" y="366" text-anchor="middle">tiempo uso</text>
-    </g>
+                    <div class="flex flex-col items-center text-center w-32 relative">
+                        <div class="w-16 h-16 rounded-full bg-purple-100 border-2 border-purple-400 flex items-center justify-center text-2xl text-purple-600 mb-3 z-10 relative"><i class="ph-fill ph-sign-out"></i></div>
+                        <p class="text-xs font-bold text-slate-700">5. Salida</p>
+                        <p class="text-[10px] text-slate-500 mt-1">Libera espacio (LED verde)</p>
+                        <div class="absolute top-8 left-1/2 w-full h-0.5 bg-slate-300 z-0"></div>
+                    </div>
 
-    <!-- flecha subida salida -->
-    <line x1="418" y1="380" x2="418" y2="420" stroke="#378ADD" stroke-width="1.2" marker-end="url(#arr)"/>
+                    <div class="flex flex-col items-center text-center w-32 relative">
+                        <div class="w-16 h-16 rounded-full bg-green-100 border-2 border-green-500 flex items-center justify-center text-2xl text-green-600 mb-3 z-10 relative"><i class="ph-fill ph-credit-card"></i></div>
+                        <p class="text-xs font-bold text-slate-700">6. Cobro</p>
+                        <p class="text-[10px] text-slate-500 mt-1">Liquida comisión 10%</p>
+                    </div>
 
-    <!-- PASO 12: Conductor libera espacio -->
-    <g class="c-blue">
-      <rect x="362" y="420" width="112" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="418" y="440" text-anchor="middle" dominant-baseline="central">Sale del</text>
-      <text class="ts" x="418" y="458" text-anchor="middle">estacionamiento</text>
-    </g>
+                </div>
+            </div>
 
-    <!-- flechas liberación -->
-    <line x1="362" y1="446" x2="350" y2="446" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-amber">
-      <rect x="226" y="420" width="122" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="287" y="440" text-anchor="middle" dominant-baseline="central">Calcula cobro</text>
-      <text class="ts" x="287" y="458" text-anchor="middle">y notifica usuario</text>
-    </g>
+            <!-- Conclusiones -->
+            <div class="bg-slate-800 text-white p-8 rounded-2xl shadow-lg relative overflow-hidden">
+                <i class="ph-fill ph-quotes absolute -top-4 -right-4 text-9xl text-slate-700 opacity-50"></i>
+                <h3 class="text-xl font-bold mb-4 text-accent">6. Conclusiones</h3>
+                <div class="space-y-4 text-sm text-slate-300 leading-relaxed relative z-10">
+                    <p>✓ Los procesos clave están diseñados para ser <strong>simples, automatizados y escalables</strong>. El ciclo operativo central se ejecuta sin intervención humana, reduciendo costos.</p>
+                    <p>✓ El equipo técnico y el hardware ESP32 son accesibles, haciendo viable el piloto con la <strong>inversión inicial de S/ 15,000</strong>.</p>
+                    <p>✓ Proveedores basados en pago por uso o capas gratuitas (Firebase) <strong>preservan el flujo de caja</strong> inicial.</p>
+                    <p>✓ SmartPark Cusco no es solo una app, sino un <strong>ecosistema integrado de hardware, software y procesos</strong> de negocio listos para escalar a otras ciudades del Perú.</p>
+                </div>
+            </div>
+        </section>
 
-    <line x1="226" y1="446" x2="214" y2="446" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-purple">
-      <rect x="100" y="420" width="112" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="156" y="440" text-anchor="middle" dominant-baseline="central">Libera espacio</text>
-      <text class="ts" x="156" y="458" text-anchor="middle">en base de datos</text>
-    </g>
+    </main>
 
-    <line x1="100" y1="446" x2="86" y2="446" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-teal">
-      <rect x="14" y="420" width="72" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="50" y="440" text-anchor="middle" dominant-baseline="central">LED vuelve</text>
-      <text class="ts" x="50" y="458" text-anchor="middle">a verde</text>
-    </g>
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-auto py-8">
+        <div class="max-w-6xl mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-sm text-slate-500">
+                <p class="font-bold text-slate-800 mb-1">Equipo Integrante:</p>
+                <p>Chacon Huaman J., Incarroca Condori J., Khuno Mamani C., Machaca Huillca E., Giraldo Altamirano R.</p>
+            </div>
+            <div class="text-right text-xs text-slate-400">
+                <p>Cusco, Perú - 2026</p>
+                <p>Docente: Ing. Felix Estanislao Vargas Quispe</p>
+            </div>
+        </div>
+    </footer>
 
-    <!-- separador 2 -->
-    <line x1="14" y1="486" x2="662" y2="486" stroke="var(--color-border-tertiary)" stroke-width="0.8" stroke-dasharray="4 3"/>
-    <text class="ts" x="340" y="502" text-anchor="middle" fill="#888780">— Ciclo de cobro y mejora —</text>
+    <!-- Script para lógica de pestañas -->
+    <script>
+        function openTab(evt, tabName) {
+            // Ocultar todos los contenidos
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
 
-    <!-- PASO 13: Cobro -->
-    <line x1="287" y1="472" x2="287" y2="514" stroke="#BA7517" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-amber">
-      <rect x="226" y="514" width="122" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="287" y="534" text-anchor="middle" dominant-baseline="central">Procesamiento</text>
-      <text class="ts" x="287" y="552" text-anchor="middle">de pago (app)</text>
-    </g>
+            // Quitar clase active y estilos de color de los botones
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active", "bg-primary", "text-white");
+                tablinks[i].classList.add("text-slate-600", "hover:bg-slate-100");
+            }
 
-    <!-- flecha a admin -->
-    <line x1="348" y1="540" x2="488" y2="540" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-green">
-      <rect x="488" y="514" width="172" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="574" y="534" text-anchor="middle" dominant-baseline="central">Recibe comisión</text>
-      <text class="ts" x="574" y="552" text-anchor="middle">e informe de uso</text>
-    </g>
-
-    <!-- PASO 14: Monitoreo y mejora -->
-    <line x1="574" y1="566" x2="574" y2="606" stroke="#639922" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-green">
-      <rect x="488" y="606" width="172" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="574" y="626" text-anchor="middle" dominant-baseline="central">Monitoreo y</text>
-      <text class="ts" x="574" y="644" text-anchor="middle">mantenimiento</text>
-    </g>
-
-    <!-- PASO 15: Mejora continua -->
-    <line x1="287" y1="566" x2="287" y2="606" stroke="#BA7517" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-amber">
-      <rect x="226" y="606" width="122" height="52" rx="8" stroke-width="0.5"/>
-      <text class="th" x="287" y="626" text-anchor="middle" dominant-baseline="central">Recolecta</text>
-      <text class="ts" x="287" y="644" text-anchor="middle">feedback usuarios</text>
-    </g>
-
-    <!-- flecha ciclo lean -->
-    <line x1="287" y1="658" x2="287" y2="698" stroke="#BA7517" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-coral">
-      <rect x="176" y="698" width="222" height="44" rx="8" stroke-width="0.5"/>
-      <text class="th" x="287" y="720" text-anchor="middle" dominant-baseline="central">Ciclo Lean: Crear → Medir → Aprender</text>
-    </g>
-
-    <!-- flecha retorno inicio -->
-    <line x1="176" y1="720" x2="50" y2="720" stroke="#993C1D" stroke-width="1.2"/>
-    <line x1="50" y1="720" x2="50" y2="775" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr)"/>
-    <g class="c-coral">
-      <rect x="14" y="775" width="652" height="36" rx="8" stroke-width="0.5"/>
-      <text class="th" x="340" y="793" text-anchor="middle" dominant-baseline="central">Nueva iteración: mejora del MVP y expansión a más estacionamientos</text>
-    </g>
-
-  </svg>
-</div>
-
-<script>
-function show(id,btn){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-  btn.classList.add('active');
-}
-</script>
+            // Mostrar la pestaña actual y añadir clases activas
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.remove("text-slate-600", "hover:bg-slate-100");
+            evt.currentTarget.classList.add("active", "bg-primary", "text-white");
+        }
+    </script>
 </body>
 </html>
