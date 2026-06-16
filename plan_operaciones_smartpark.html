@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:transparent;padding:12px 4px}
+.main-title{text-align:center;font-size:15px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.main-sub{text-align:center;font-size:11px;color:var(--color-text-secondary);margin-bottom:14px}
+
+.tabs{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap}
+.tab{flex:1;min-width:100px;padding:9px 6px;border-radius:9px;border:none;cursor:pointer;font-family:var(--font-sans);font-size:11px;font-weight:500;transition:all .18s;text-align:center;outline:none;line-height:1.3}
+.tab.t1{background:#E1F5EE;color:#085041}
+.tab.t2{background:#EEEDFE;color:#3C3489}
+.tab.t3{background:#FAEEDA;color:#633806}
+.tab.t4{background:#FAECE7;color:#712B13}
+.tab.t5{background:#E6F1FB;color:#0C447C}
+.tab.active{filter:brightness(.86);box-shadow:0 2px 7px rgba(0,0,0,.12)}
+@media(prefers-color-scheme:dark){
+.tab.t1{background:#04342C;color:#9FE1CB}
+.tab.t2{background:#26215C;color:#AFA9EC}
+.tab.t3{background:#412402;color:#EF9F27}
+.tab.t4{background:#4A1B0C;color:#F09975}
+.tab.t5{background:#042C53;color:#85B7EB}
+}
+
+.panel{display:none}.panel.active{display:block}
+
+/* cards genéricos */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:9px}
+.card{border-radius:10px;padding:12px 14px}
+.card-title{font-size:12px;font-weight:500;margin-bottom:7px}
+.card ul{list-style:none;padding:0}
+.card ul li{font-size:11px;line-height:1.6;padding-left:10px;position:relative;color:inherit;opacity:.88}
+.card ul li::before{content:"▸";position:absolute;left:0;font-size:10px;top:1px;opacity:.6}
+
+/* colores */
+.c-teal{background:#E1F5EE;color:#0F6E56}.c-teal .card-title{color:#04342C}
+.c-purple{background:#EEEDFE;color:#534AB7}.c-purple .card-title{color:#26215C}
+.c-amber{background:#FAEEDA;color:#854F0B}.c-amber .card-title{color:#412402}
+.c-coral{background:#FAECE7;color:#993C1D}.c-coral .card-title{color:#4A1B0C}
+.c-blue{background:#E6F1FB;color:#185FA5}.c-blue .card-title{color:#042C53}
+.c-green{background:#EAF3DE;color:#3B6D11}.c-green .card-title{color:#173404}
+.c-gray{background:var(--color-background-secondary);color:var(--color-text-secondary)}.c-gray .card-title{color:var(--color-text-primary)}
+@media(prefers-color-scheme:dark){
+.c-teal{background:#04342C;color:#9FE1CB}.c-teal .card-title{color:#E1F5EE}
+.c-purple{background:#26215C;color:#AFA9EC}.c-purple .card-title{color:#EEEDFE}
+.c-amber{background:#412402;color:#EF9F27}.c-amber .card-title{color:#FAEEDA}
+.c-coral{background:#4A1B0C;color:#F09975}.c-coral .card-title{color:#FAECE7}
+.c-blue{background:#042C53;color:#85B7EB}.c-blue .card-title{color:#E6F1FB}
+.c-green{background:#173404;color:#C0DD97}.c-green .card-title{color:#EAF3DE}
+}
+
+/* tabla proveedores */
+.ptable{width:100%;border-collapse:separate;border-spacing:0;border-radius:10px;overflow:hidden;font-size:11px}
+.ptable th{background:#FAEEDA;color:#633806;font-weight:500;padding:9px 11px;text-align:left}
+.ptable td{padding:8px 11px;color:var(--color-text-secondary);border-top:1px solid var(--color-border-tertiary)}
+.ptable tr:nth-child(odd) td{background:var(--color-background-secondary)}
+.ptable tr:nth-child(even) td{background:var(--color-background-primary)}
+.badge{display:inline-block;border-radius:5px;padding:1px 7px;font-size:10px;font-weight:500}
+.badge-hw{background:#E1F5EE;color:#085041}
+.badge-sw{background:#EEEDFE;color:#3C3489}
+.badge-sv{background:#FAEEDA;color:#633806}
+.badge-al{background:#FAECE7;color:#712B13}
+@media(prefers-color-scheme:dark){
+.ptable th{background:#412402;color:#FAEEDA}
+.badge-hw{background:#04342C;color:#9FE1CB}
+.badge-sw{background:#26215C;color:#AFA9EC}
+.badge-sv{background:#412402;color:#EF9F27}
+.badge-al{background:#4A1B0C;color:#F09975}
+}
+
+/* instalaciones grid */
+.inst-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.inst-card{border-radius:10px;padding:13px 14px}
+.inst-tag{display:inline-block;font-size:10px;font-weight:500;border-radius:5px;padding:2px 8px;margin-bottom:7px}
+.it-fisico{background:#E1F5EE;color:#085041}
+.it-digital{background:#EEEDFE;color:#3C3489}
+.it-cloud{background:#FAEEDA;color:#633806}
+.it-proto{background:#FAECE7;color:#712B13}
+@media(prefers-color-scheme:dark){
+.it-fisico{background:#04342C;color:#9FE1CB}
+.it-digital{background:#26215C;color:#AFA9EC}
+.it-cloud{background:#412402;color:#EF9F27}
+.it-proto{background:#4A1B0C;color:#F09975}
+}
+</style>
+</head>
+<body>
+<div class="main-title">Plan de Operaciones — SmartPark Cusco</div>
+<div class="main-sub">Procesos · Recursos · Proveedores · Instalaciones y Tecnología · Mapa de Proceso</div>
+
+<div class="tabs">
+  <button class="tab t1 active" onclick="show('p1',this)">1. Procesos clave</button>
+  <button class="tab t2" onclick="show('p2',this)">2. Recursos</button>
+  <button class="tab t3" onclick="show('p3',this)">3. Proveedores</button>
+  <button class="tab t4" onclick="show('p4',this)">4. Instalaciones y tecnología</button>
+  <button class="tab t5" onclick="show('p5',this)">5. Mapa del proceso</button>
+</div>
+
+<!-- ===== 1. PROCESOS CLAVE ===== -->
+<div id="panel-p1" class="panel active">
+  <div class="grid2">
+    <div class="card c-teal">
+      <div class="card-title">P1 · Instalación de sensores IoT</div>
+      <ul>
+        <li>Montaje del microcontrolador ESP32 en cada espacio</li>
+        <li>Instalación de placas de presión en el suelo</li>
+        <li>Conexión de indicadores LED por espacio</li>
+        <li>Configuración de conectividad Wi-Fi local</li>
+        <li>Prueba de detección de vehículos en sitio</li>
+      </ul>
+    </div>
+    <div class="card c-purple">
+      <div class="card-title">P2 · Transmisión de datos en tiempo real</div>
+      <ul>
+        <li>ESP32 detecta ocupación del espacio vía sensor</li>
+        <li>Envía estado (libre / ocupado) a Firebase vía Wi-Fi</li>
+        <li>Firebase actualiza la base de datos en milisegundos</li>
+        <li>App móvil recibe la actualización en tiempo real</li>
+        <li>LED cambia de color según el estado del espacio</li>
+      </ul>
+    </div>
+    <div class="card c-amber">
+      <div class="card-title">P3 · Gestión de reservas (app)</div>
+      <ul>
+        <li>Usuario visualiza espacios disponibles en el mapa</li>
+        <li>Selecciona espacio y confirma reserva desde la app</li>
+        <li>Sistema bloquea el espacio para el usuario</li>
+        <li>Notificación push confirmando la reserva</li>
+        <li>Registro de tiempo de uso y generación de cobro</li>
+      </ul>
+    </div>
+    <div class="card c-blue">
+      <div class="card-title">P4 · Monitoreo y mantenimiento</div>
+      <ul>
+        <li>Supervisión continua del estado de sensores en campo</li>
+        <li>Revisión periódica de conectividad Wi-Fi</li>
+        <li>Actualización remota del firmware de los ESP32</li>
+        <li>Reemplazo preventivo de sensores defectuosos</li>
+        <li>Reporte manual de incidencias por canal digital</li>
+      </ul>
+    </div>
+    <div class="card c-coral">
+      <div class="card-title">P5 · Gestión de pagos e ingresos</div>
+      <ul>
+        <li>Cobro por comisión (≈10%) sobre cada reserva</li>
+        <li>Facturación mensual a estacionamientos afiliados</li>
+        <li>Gestión de créditos del programa de referidos</li>
+        <li>Conciliación de ingresos con la plataforma de pagos</li>
+        <li>Reportes financieros mensuales al equipo</li>
+      </ul>
+    </div>
+    <div class="card c-green">
+      <div class="card-title">P6 · Atención al cliente y mejora continua</div>
+      <ul>
+        <li>Soporte al usuario vía app (chat / reporte de errores)</li>
+        <li>Recolección de retroalimentación y calificaciones</li>
+        <li>Actualización de la app según feedback de usuarios</li>
+        <li>Ciclo Lean Startup: Crear → Medir → Aprender</li>
+        <li>Análisis de métricas de uso y ocupación</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 2. RECURSOS ===== -->
+<div id="panel-p2" class="panel">
+  <div class="grid3">
+    <div class="card c-teal">
+      <div class="card-title">Recursos físicos (hardware)</div>
+      <ul>
+        <li>Microcontroladores ESP32 (uno por espacio)</li>
+        <li>Placas / sensores de presión vehicular</li>
+        <li>Indicadores LED (verde = libre, rojo = ocupado)</li>
+        <li>Cableado y conectores eléctricos</li>
+        <li>Carcasas protectoras contra clima y vandalismo</li>
+        <li>Routers Wi-Fi para zonas piloto</li>
+        <li>Computadora de desarrollo y testing</li>
+      </ul>
+    </div>
+    <div class="card c-purple">
+      <div class="card-title">Recursos digitales (software)</div>
+      <ul>
+        <li>Aplicación móvil Android e iOS</li>
+        <li>Firebase Realtime Database (base de datos en nube)</li>
+        <li>Firebase Authentication (gestión de usuarios)</li>
+        <li>Simulador Wokwi para pruebas del MVP</li>
+        <li>Plataforma de pagos digital integrada</li>
+        <li>Panel de administración web para dueños</li>
+        <li>Herramientas de monitoreo y alertas en nube</li>
+      </ul>
+    </div>
+    <div class="card c-amber">
+      <div class="card-title">Recursos humanos</div>
+      <ul>
+        <li>Equipo de desarrollo IoT (firmware ESP32)</li>
+        <li>Desarrollador de app móvil (Android / iOS)</li>
+        <li>Administrador de base de datos Firebase</li>
+        <li>Técnico de instalación y mantenimiento en campo</li>
+        <li>Responsable de marketing digital</li>
+        <li>Gestor de alianzas y relaciones comerciales</li>
+        <li>Asesor académico de la UAC</li>
+      </ul>
+    </div>
+    <div class="card c-blue">
+      <div class="card-title">Recursos financieros</div>
+      <ul>
+        <li>Capital semilla inicial: S/ 15,000</li>
+        <li>Hardware: S/ 3,000</li>
+        <li>Software y desarrollo: S/ 4,000</li>
+        <li>Marketing digital: S/ 6,000</li>
+        <li>Otros costos operativos: S/ 2,000</li>
+        <li>Fondos Startup Perú / incubadoras UAC</li>
+        <li>Ingresos proyectados a partir del mes 3</li>
+      </ul>
+    </div>
+    <div class="card c-coral">
+      <div class="card-title">Recursos intangibles</div>
+      <ul>
+        <li>Conocimiento técnico en IoT y desarrollo móvil</li>
+        <li>Respaldo académico de la Universidad Andina del Cusco</li>
+        <li>Metodología Lean Startup validada con MVP</li>
+        <li>Alianzas estratégicas con estacionamientos</li>
+        <li>Marca SmartPark Cusco en construcción</li>
+        <li>Datos de ocupación generados por el sistema</li>
+      </ul>
+    </div>
+    <div class="card c-green">
+      <div class="card-title">Recursos de infraestructura</div>
+      <ul>
+        <li>Conectividad Wi-Fi en zonas piloto del centro</li>
+        <li>Servidores Firebase (Google Cloud)</li>
+        <li>Espacio físico en estacionamientos aliados</li>
+        <li>Acceso a tiendas Google Play y App Store</li>
+        <li>Dominio web y hosting del sitio informativo</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 3. PROVEEDORES ===== -->
+<div id="panel-p3" class="panel">
+  <table class="ptable">
+    <thead>
+      <tr>
+        <th>Proveedor</th>
+        <th>Tipo</th>
+        <th>¿Qué provee?</th>
+        <th>Criticidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong style="font-weight:500">Tiendas electrónicas locales (Cusco / Lima)</strong></td>
+        <td><span class="badge badge-hw">Hardware</span></td>
+        <td>Microcontroladores ESP32, sensores de presión, LEDs, cableado y componentes electrónicos</td>
+        <td>Alta — base del sistema físico</td>
+      </tr>
+      <tr>
+        <td><strong style="font-weight:500">Google Firebase (Google Cloud)</strong></td>
+        <td><span class="badge badge-sw">Software / Nube</span></td>
+        <td>Base de datos en tiempo real, autenticación de usuarios, hosting del backend y notificaciones push</td>
+        <td>Muy alta — corazón del sistema</td>
+      </tr>
+      <tr>
+        <td><strong style="font-weight:500">Google Play Store / Apple App Store</strong></td>
+        <td><span class="badge badge-sw">Software</span></td>
+        <td>Distribución oficial de la app móvil para Android e iOS a los usuarios finales</td>
+        <td>Alta — canal de distribución</td>
+      </tr>
+      <tr>
+        <td><strong style="font-weight:500">Wokwi (simulador online)</strong></td>
+        <td><span class="badge badge-sw">Software</span></td>
+        <td>Simulación y prueba del firmware del ESP32 antes del despliegue físico en campo</td>
+        <td>Media — solo en fase MVP</td>
+      </tr>
+      <tr>
+        <td><strong style="font-weight:500">Proveedor de internet local (ISP Cusco)</strong></td>
+        <td><span class="badge badge-sv">Servicio</span></td>
+        <td>Conectividad Wi-Fi en las zonas piloto del centro histórico para los sensores ESP32</td>
+        <td>Alta — sin Wi-Fi no hay datos</td>
+      </tr>
+      <tr>
+        <td><strong style="font-weight:500">Plataforma de pagos (Yape / Plin / Stripe)</strong></td>
+        <td><span class="badge badge-sv">Servicio</span></td>
+        <td>Procesamiento de cobros por reserva, suscripciones y pagos por uso dentro de la app</td>
+        <td>Alta — monetización directa</td>
+      </tr>
+      <tr>
+        <td><strong style="font-weight:500">Municipalidad Provincial del Cusco</strong></td>
+        <td><span class="badge badge-al">Aliado</span></td>
+        <td>Permisos de instalación en vía pública, acceso a estacionamientos municipales y respaldo institucional</td>
+        <td>Alta — viabilidad regulatoria</td>
+      </tr>
+      <tr>
+        <td><strong style="font-weight:500">Dueños de estacionamientos privados</strong></td>
+        <td><span class="badge badge-al">Aliado</span></td>
+        <td>Espacio físico para instalar sensores, colaboración operativa y acceso a sus clientes</td>
+        <td>Muy alta — mercado principal</td>
+      </tr>
+      <tr>
+        <td><strong style="font-weight:500">Universidad Andina del Cusco (UAC)</strong></td>
+        <td><span class="badge badge-al">Aliado</span></td>
+        <td>Respaldo académico, fondos de emprendimiento universitario y entorno de prueba controlado</td>
+        <td>Media — soporte estratégico</td>
+      </tr>
+      <tr>
+        <td><strong style="font-weight:500">Meta (Facebook / Instagram Ads)</strong></td>
+        <td><span class="badge badge-sv">Servicio</span></td>
+        <td>Plataforma de publicidad digital segmentada para captación de usuarios en Cusco</td>
+        <td>Media — adquisición de usuarios</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== 4. INSTALACIONES Y TECNOLOGÍA ===== -->
+<div id="panel-p4" class="panel">
+  <div class="inst-grid">
+    <div class="inst-card c-teal">
+      <span class="inst-tag it-fisico">Instalación física</span>
+      <div class="card-title">Zona piloto — centro histórico de Cusco</div>
+      <ul class="card-list" style="list-style:none;padding:0">
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Estacionamientos privados aliados alrededor de la Plaza de Armas</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Sensor ESP32 + placa de presión instalados en cada plaza de estacionamiento</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ LED indicador visible para el conductor al ingresar al espacio</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Router Wi-Fi instalado en el estacionamiento aliado</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Carcasa protectora resistente a clima andino y vandalismo</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Fuente de alimentación estable por espacio</li>
+      </ul>
+    </div>
+    <div class="inst-card c-purple">
+      <span class="inst-tag it-digital">Tecnología de hardware</span>
+      <div class="card-title">Sistema embebido ESP32</div>
+      <ul class="card-list" style="list-style:none;padding:0">
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Microcontrolador ESP32 de 32 bits con Wi-Fi y Bluetooth integrado</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Sensor de presión para detectar presencia de vehículo</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ LEDs bicolor (verde = libre / rojo = ocupado)</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Firmware programado en Arduino IDE / C++</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Sincronización horaria integrada (NTP)</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Prototipo validado en simulador Wokwi</li>
+      </ul>
+    </div>
+    <div class="inst-card c-amber">
+      <span class="inst-tag it-cloud">Infraestructura en nube</span>
+      <div class="card-title">Firebase — Google Cloud Platform</div>
+      <ul class="card-list" style="list-style:none;padding:0">
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Firebase Realtime Database: actualización de estados en milisegundos</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Firebase Authentication: registro y login de usuarios</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Firebase Cloud Messaging: notificaciones push a la app</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Firebase Hosting: alojamiento del panel web de administración</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Escalable sin necesidad de servidores propios</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Capa gratuita disponible para la fase piloto</li>
+      </ul>
+    </div>
+    <div class="inst-card c-blue">
+      <span class="inst-tag it-proto">Aplicación móvil</span>
+      <div class="card-title">App SmartPark Cusco</div>
+      <ul class="card-list" style="list-style:none;padding:0">
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Compatible con Android e iOS</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Mapa interactivo de disponibilidad en tiempo real</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Módulo de reserva y pago integrado</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Panel de créditos y programa de referidos</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Historial de reservas y tiempo de uso</li>
+        <li style="font-size:11px;padding-left:10px;position:relative;line-height:1.6;opacity:.88">▸ Distribuida en Google Play Store y App Store</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 5. MAPA DEL PROCESO ===== -->
+<div id="panel-p5" class="panel">
+  <svg width="100%" viewBox="0 0 680 820" role="img">
+    <title>Mapa del proceso SmartPark Cusco</title>
+    <desc>Diagrama de flujo del proceso operativo de SmartPark Cusco desde la instalación hasta el cobro</desc>
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+
+    <!-- Carriles de actores -->
+    <!-- Labels carriles -->
+    <rect x="10" y="44" width="80" height="740" rx="8" fill="#E1F5EE" opacity=".35"/>
+    <rect x="96" y="44" width="120" height="740" rx="8" fill="#EEEDFE" opacity=".30"/>
+    <rect x="222" y="44" width="130" height="740" rx="8" fill="#FAEEDA" opacity=".28"/>
+    <rect x="358" y="44" width="120" height="740" rx="8" fill="#E6F1FB" opacity=".28"/>
+    <rect x="484" y="44" width="182" height="740" rx="8" fill="#EAF3DE" opacity=".28"/>
+
+    <text class="th" x="50" y="32" text-anchor="middle" font-size="11">Sensor</text>
+    <text class="ts" x="50" y="44" text-anchor="middle">ESP32</text>
+    <text class="th" x="156" y="32" text-anchor="middle" font-size="11">Firebase</text>
+    <text class="ts" x="156" y="44" text-anchor="middle">Nube</text>
+    <text class="th" x="287" y="32" text-anchor="middle" font-size="11">App Móvil</text>
+    <text class="ts" x="287" y="44" text-anchor="middle">Usuario</text>
+    <text class="th" x="418" y="32" text-anchor="middle" font-size="11">Conductor</text>
+    <text class="ts" x="418" y="44" text-anchor="middle">Cliente</text>
+    <text class="th" x="575" y="32" text-anchor="middle" font-size="11">Admin /</text>
+    <text class="ts" x="575" y="44" text-anchor="middle">Estacionamiento</text>
+
+    <!-- PASO 1: Instalación -->
+    <g class="c-teal">
+      <rect x="484" y="64" width="178" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="573" y="86" text-anchor="middle" dominant-baseline="central">Instala sensores ESP32</text>
+    </g>
+
+    <!-- PASO 2: Sensor detecta -->
+    <line x1="573" y1="108" x2="573" y2="128" stroke="#1D9E75" stroke-width="1.2" marker-end="url(#arr)"/>
+    <line x1="573" y1="128" x2="50" y2="128" stroke="#1D9E75" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-teal">
+      <rect x="14" y="136" width="72" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="50" y="156" text-anchor="middle" dominant-baseline="central">Detecta</text>
+      <text class="ts" x="50" y="174" text-anchor="middle">vehículo</text>
+    </g>
+
+    <!-- PASO 3: ESP32 envía a Firebase -->
+    <line x1="86" y1="162" x2="100" y2="162" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-purple">
+      <rect x="100" y="136" width="112" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="156" y="156" text-anchor="middle" dominant-baseline="central">Actualiza estado</text>
+      <text class="ts" x="156" y="174" text-anchor="middle">libre / ocupado</text>
+    </g>
+
+    <!-- PASO 4: App recibe datos -->
+    <line x1="212" y1="162" x2="226" y2="162" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-amber">
+      <rect x="226" y="136" width="122" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="287" y="156" text-anchor="middle" dominant-baseline="central">Muestra mapa</text>
+      <text class="ts" x="287" y="174" text-anchor="middle">en tiempo real</text>
+    </g>
+
+    <!-- PASO 5: Conductor ve la app -->
+    <line x1="348" y1="162" x2="362" y2="162" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-blue">
+      <rect x="362" y="136" width="112" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="418" y="156" text-anchor="middle" dominant-baseline="central">Ve espacios</text>
+      <text class="ts" x="418" y="174" text-anchor="middle">disponibles</text>
+    </g>
+
+    <!-- flecha bajada conductor -->
+    <line x1="418" y1="188" x2="418" y2="228" stroke="#378ADD" stroke-width="1.2" marker-end="url(#arr)"/>
+
+    <!-- PASO 6: Conductor selecciona espacio -->
+    <g class="c-blue">
+      <rect x="362" y="228" width="112" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="418" y="248" text-anchor="middle" dominant-baseline="central">Selecciona</text>
+      <text class="ts" x="418" y="266" text-anchor="middle">espacio</text>
+    </g>
+
+    <!-- flecha a app -->
+    <line x1="362" y1="254" x2="350" y2="254" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+
+    <!-- PASO 7: App gestiona reserva -->
+    <g class="c-amber">
+      <rect x="226" y="228" width="122" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="287" y="248" text-anchor="middle" dominant-baseline="central">Gestiona reserva</text>
+      <text class="ts" x="287" y="266" text-anchor="middle">y bloquea espacio</text>
+    </g>
+
+    <!-- flecha a Firebase -->
+    <line x1="226" y1="254" x2="214" y2="254" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+
+    <!-- PASO 8: Firebase bloquea -->
+    <g class="c-purple">
+      <rect x="100" y="228" width="112" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="156" y="248" text-anchor="middle" dominant-baseline="central">Marca espacio</text>
+      <text class="ts" x="156" y="266" text-anchor="middle">como reservado</text>
+    </g>
+
+    <!-- flecha a ESP32 -->
+    <line x1="100" y1="254" x2="86" y2="254" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+
+    <!-- PASO 9: LED cambia -->
+    <g class="c-teal">
+      <rect x="14" y="228" width="72" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="50" y="248" text-anchor="middle" dominant-baseline="central">LED cambia</text>
+      <text class="ts" x="50" y="266" text-anchor="middle">a rojo</text>
+    </g>
+
+    <!-- separador -->
+    <line x1="14" y1="300" x2="662" y2="300" stroke="var(--color-border-tertiary)" stroke-width="0.8" stroke-dasharray="4 3"/>
+    <text class="ts" x="340" y="316" text-anchor="middle" fill="#888780">— Conductor llega al estacionamiento —</text>
+
+    <!-- PASO 10: Conductor usa espacio -->
+    <line x1="418" y1="280" x2="418" y2="328" stroke="#378ADD" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-blue">
+      <rect x="362" y="328" width="112" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="418" y="348" text-anchor="middle" dominant-baseline="central">Ocupa el</text>
+      <text class="ts" x="418" y="366" text-anchor="middle">estacionamiento</text>
+    </g>
+
+    <!-- PASO 11: ESP32 registra tiempo -->
+    <line x1="86" y1="280" x2="86" y2="354" stroke="#1D9E75" stroke-width="1.2"/>
+    <line x1="86" y1="354" x2="14" y2="354" stroke="#1D9E75" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-teal">
+      <rect x="14" y="328" width="72" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="50" y="348" text-anchor="middle" dominant-baseline="central">Registra</text>
+      <text class="ts" x="50" y="366" text-anchor="middle">tiempo uso</text>
+    </g>
+
+    <!-- flecha subida salida -->
+    <line x1="418" y1="380" x2="418" y2="420" stroke="#378ADD" stroke-width="1.2" marker-end="url(#arr)"/>
+
+    <!-- PASO 12: Conductor libera espacio -->
+    <g class="c-blue">
+      <rect x="362" y="420" width="112" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="418" y="440" text-anchor="middle" dominant-baseline="central">Sale del</text>
+      <text class="ts" x="418" y="458" text-anchor="middle">estacionamiento</text>
+    </g>
+
+    <!-- flechas liberación -->
+    <line x1="362" y1="446" x2="350" y2="446" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-amber">
+      <rect x="226" y="420" width="122" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="287" y="440" text-anchor="middle" dominant-baseline="central">Calcula cobro</text>
+      <text class="ts" x="287" y="458" text-anchor="middle">y notifica usuario</text>
+    </g>
+
+    <line x1="226" y1="446" x2="214" y2="446" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-purple">
+      <rect x="100" y="420" width="112" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="156" y="440" text-anchor="middle" dominant-baseline="central">Libera espacio</text>
+      <text class="ts" x="156" y="458" text-anchor="middle">en base de datos</text>
+    </g>
+
+    <line x1="100" y1="446" x2="86" y2="446" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-teal">
+      <rect x="14" y="420" width="72" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="50" y="440" text-anchor="middle" dominant-baseline="central">LED vuelve</text>
+      <text class="ts" x="50" y="458" text-anchor="middle">a verde</text>
+    </g>
+
+    <!-- separador 2 -->
+    <line x1="14" y1="486" x2="662" y2="486" stroke="var(--color-border-tertiary)" stroke-width="0.8" stroke-dasharray="4 3"/>
+    <text class="ts" x="340" y="502" text-anchor="middle" fill="#888780">— Ciclo de cobro y mejora —</text>
+
+    <!-- PASO 13: Cobro -->
+    <line x1="287" y1="472" x2="287" y2="514" stroke="#BA7517" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-amber">
+      <rect x="226" y="514" width="122" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="287" y="534" text-anchor="middle" dominant-baseline="central">Procesamiento</text>
+      <text class="ts" x="287" y="552" text-anchor="middle">de pago (app)</text>
+    </g>
+
+    <!-- flecha a admin -->
+    <line x1="348" y1="540" x2="488" y2="540" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-green">
+      <rect x="488" y="514" width="172" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="574" y="534" text-anchor="middle" dominant-baseline="central">Recibe comisión</text>
+      <text class="ts" x="574" y="552" text-anchor="middle">e informe de uso</text>
+    </g>
+
+    <!-- PASO 14: Monitoreo y mejora -->
+    <line x1="574" y1="566" x2="574" y2="606" stroke="#639922" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-green">
+      <rect x="488" y="606" width="172" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="574" y="626" text-anchor="middle" dominant-baseline="central">Monitoreo y</text>
+      <text class="ts" x="574" y="644" text-anchor="middle">mantenimiento</text>
+    </g>
+
+    <!-- PASO 15: Mejora continua -->
+    <line x1="287" y1="566" x2="287" y2="606" stroke="#BA7517" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-amber">
+      <rect x="226" y="606" width="122" height="52" rx="8" stroke-width="0.5"/>
+      <text class="th" x="287" y="626" text-anchor="middle" dominant-baseline="central">Recolecta</text>
+      <text class="ts" x="287" y="644" text-anchor="middle">feedback usuarios</text>
+    </g>
+
+    <!-- flecha ciclo lean -->
+    <line x1="287" y1="658" x2="287" y2="698" stroke="#BA7517" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-coral">
+      <rect x="176" y="698" width="222" height="44" rx="8" stroke-width="0.5"/>
+      <text class="th" x="287" y="720" text-anchor="middle" dominant-baseline="central">Ciclo Lean: Crear → Medir → Aprender</text>
+    </g>
+
+    <!-- flecha retorno inicio -->
+    <line x1="176" y1="720" x2="50" y2="720" stroke="#993C1D" stroke-width="1.2"/>
+    <line x1="50" y1="720" x2="50" y2="775" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr)"/>
+    <g class="c-coral">
+      <rect x="14" y="775" width="652" height="36" rx="8" stroke-width="0.5"/>
+      <text class="th" x="340" y="793" text-anchor="middle" dominant-baseline="central">Nueva iteración: mejora del MVP y expansión a más estacionamientos</text>
+    </g>
+
+  </svg>
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
