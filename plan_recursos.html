@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Recursos | SmartPark Cusco</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles for smooth transitions */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Timeline styles */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background-color: #dbeafe;
+            z-index: 0;
+        }
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 24px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Header Section -->
+    <header class="bg-brand-900 text-white pt-16 pb-20 px-4 shadow-xl relative overflow-hidden">
+        <!-- Abstract Background Shapes -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
+            <div class="absolute -top-20 -right-20 w-96 h-96 rounded-full border-[40px] border-white"></div>
+            <div class="absolute bottom-10 -left-10 w-64 h-64 rounded-full border-[20px] border-white"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto relative z-10 text-center">
+            <div class="inline-block bg-brand-600 px-4 py-1 rounded-full text-sm font-semibold mb-4 tracking-wider uppercase text-brand-100">
+                Startup Universitaria
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Plan de Recursos</h1>
+            <h2 class="text-2xl font-light text-brand-100 mb-6">SmartPark Cusco</h2>
+            <p class="max-w-2xl mx-auto text-brand-50 text-base md:text-lg opacity-90 leading-relaxed">
+                Estructura organizacional, equipo fundador y proyección salarial para la fase de MVP y piloto, diseñados bajo el enfoque Lean Startup.
+            </p>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="max-w-4xl mx-auto w-full px-4 relative z-20 -mt-8">
+        <div class="bg-white rounded-2xl shadow-lg p-2 flex flex-col sm:flex-row gap-2 justify-between border border-gray-100">
+            <button onclick="openTab('equipo', this)" class="tab-btn w-full sm:w-1/3 py-3 px-4 rounded-xl font-medium transition-all text-brand-600 bg-brand-50 shadow-sm flex items-center justify-center gap-2">
+                <i class="fas fa-users text-lg"></i>
+                <span>Equipo</span>
+            </button>
+            <button onclick="openTab('estructura', this)" class="tab-btn w-full sm:w-1/3 py-3 px-4 rounded-xl font-medium transition-all text-gray-500 hover:bg-gray-50 flex items-center justify-center gap-2">
+                <i class="fas fa-sitemap text-lg"></i>
+                <span>Estructura</span>
+            </button>
+            <button onclick="openTab('finanzas', this)" class="tab-btn w-full sm:w-1/3 py-3 px-4 rounded-xl font-medium transition-all text-gray-500 hover:bg-gray-50 flex items-center justify-center gap-2">
+                <i class="fas fa-chart-pie text-lg"></i>
+                <span>Presupuesto</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-6xl mx-auto w-full px-4 py-12">
+
+        <!-- TAB 1: EQUIPO DE TRABAJO -->
+        <section id="equipo" class="tab-content active">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-gray-800 mb-3">Equipo Fundador</h3>
+                <p class="text-gray-500 max-w-2xl mx-auto">Conformado por 5 especialistas en Ingeniería de Sistemas, cubriendo todas las áreas clave sin necesidad de contrataciones externas en la fase inicial.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Member 1 -->
+                <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100 card-hover relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">Liderazgo</div>
+                    <div class="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center text-brand-600 text-2xl mb-4">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800">Juan Jose Incarroca</h4>
+                    <p class="text-sm text-brand-600 font-semibold mb-2">Gerente General / Líder de Proyecto</p>
+                    <div class="inline-block bg-gray-100 px-2 py-1 rounded text-xs text-gray-600 mb-4">
+                        <i class="fas fa-graduation-cap mr-1"></i> Gestión y Administración
+                    </div>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Coordina al equipo, gestiona alianzas estratégicas (Municipalidad, Cámara de Comercio, UAC), supervisa cronograma, KPIs y representa a la startup ante terceros.
+                    </p>
+                </div>
+
+                <!-- Member 2 -->
+                <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100 card-hover relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">Hardware</div>
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 text-2xl mb-4">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800">Cristian Maykol Khuno</h4>
+                    <p class="text-sm text-amber-600 font-semibold mb-2">Líder de Hardware e IoT</p>
+                    <div class="inline-block bg-gray-100 px-2 py-1 rounded text-xs text-gray-600 mb-4">
+                        <i class="fas fa-graduation-cap mr-1"></i> Sistemas Embebidos
+                    </div>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Diseña, programa y calibra el sistema ESP32 y los sensores de presión; ejecuta pruebas de campo y mantenimiento técnico del hardware.
+                    </p>
+                </div>
+
+                <!-- Member 3 -->
+                <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100 card-hover relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">Software</div>
+                    <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 text-2xl mb-4">
+                        <i class="fas fa-mobile-screen"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800">Edwin Machaca</h4>
+                    <p class="text-sm text-emerald-600 font-semibold mb-2">Líder de Desarrollo de Software</p>
+                    <div class="inline-block bg-gray-100 px-2 py-1 rounded text-xs text-gray-600 mb-4">
+                        <i class="fas fa-graduation-cap mr-1"></i> Desarrollo Móvil
+                    </div>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Desarrolla y mantiene la app móvil, integra la plataforma con Firebase Realtime Database y gestiona la seguridad de los datos.
+                    </p>
+                </div>
+
+                <!-- Member 4 -->
+                <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100 card-hover relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">Comercial</div>
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 text-2xl mb-4">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800">Rodrigo Giraldo</h4>
+                    <p class="text-sm text-purple-600 font-semibold mb-2">Resp. Marketing y Alianzas</p>
+                    <div class="inline-block bg-gray-100 px-2 py-1 rounded text-xs text-gray-600 mb-4">
+                        <i class="fas fa-graduation-cap mr-1"></i> Marketing Digital
+                    </div>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Administra redes sociales, campañas pagadas, programa de referidos y negociación con estacionamientos privados afiliados.
+                    </p>
+                </div>
+
+                <!-- Member 5 -->
+                <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100 card-hover relative overflow-hidden lg:col-span-2 xl:col-span-1">
+                    <div class="absolute top-0 right-0 bg-rose-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">Operaciones</div>
+                    <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center text-rose-600 text-2xl mb-4">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800">Jeferson Marco Chacon</h4>
+                    <p class="text-sm text-rose-600 font-semibold mb-2">Resp. Finanzas y Operaciones</p>
+                    <div class="inline-block bg-gray-100 px-2 py-1 rounded text-xs text-gray-600 mb-4">
+                        <i class="fas fa-graduation-cap mr-1"></i> Administración
+                    </div>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Controla el flujo de caja, el presupuesto, la búsqueda de financiamiento (Startup Perú) y los procesos de soporte al cliente.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: ESTRUCTURA Y VINCULACIÓN -->
+        <section id="estructura" class="tab-content">
+            
+            <div class="mb-16">
+                <div class="text-center mb-10">
+                    <h3 class="text-3xl font-bold text-gray-800 mb-3">Estructura Organizacional Horizontal</h3>
+                    <p class="text-gray-500 max-w-2xl mx-auto">Decisiones colegiadas entre socios y operación distribuida por áreas funcionales para mantener agilidad (Enfoque Lean).</p>
+                </div>
+
+                <!-- Org Chart Graphic -->
+                <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 overflow-x-auto">
+                    <div class="min-w-[700px] flex flex-col items-center">
+                        <!-- Top Node -->
+                        <div class="bg-brand-900 text-white px-6 py-3 rounded-lg font-bold shadow-lg text-center w-64 mb-8 relative">
+                            Junta de Fundadores
+                            <div class="text-xs font-normal text-brand-200 mt-1">Decisiones Estratégicas</div>
+                            <!-- Connecting Line Down -->
+                            <div class="absolute left-1/2 bottom-[-32px] w-[2px] h-8 bg-gray-300 transform -translate-x-1/2"></div>
+                        </div>
+
+                        <!-- Horizontal Line -->
+                        <div class="w-[80%] h-[2px] bg-gray-300 relative mb-8">
+                            <!-- Connector lines down -->
+                            <div class="absolute left-[10%] top-0 w-[2px] h-8 bg-gray-300"></div>
+                            <div class="absolute left-[30%] top-0 w-[2px] h-8 bg-gray-300"></div>
+                            <div class="absolute left-[50%] top-0 w-[2px] h-8 bg-gray-300"></div>
+                            <div class="absolute left-[70%] top-0 w-[2px] h-8 bg-gray-300"></div>
+                            <div class="absolute left-[90%] top-0 w-[2px] h-8 bg-gray-300"></div>
+                        </div>
+
+                        <!-- Functional Areas -->
+                        <div class="flex justify-between w-[90%] gap-4">
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center flex-1">
+                                <i class="fas fa-user-tie text-brand-600 mb-2"></i>
+                                <div class="text-sm font-bold text-gray-700">Gerencia<br>General</div>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center flex-1">
+                                <i class="fas fa-microchip text-amber-600 mb-2"></i>
+                                <div class="text-sm font-bold text-gray-700">Hardware<br>& IoT</div>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center flex-1">
+                                <i class="fas fa-mobile-screen text-emerald-600 mb-2"></i>
+                                <div class="text-sm font-bold text-gray-700">Desarrollo<br>Software</div>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center flex-1">
+                                <i class="fas fa-bullhorn text-purple-600 mb-2"></i>
+                                <div class="text-sm font-bold text-gray-700">Marketing<br>& Alianzas</div>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center flex-1">
+                                <i class="fas fa-chart-line text-rose-600 mb-2"></i>
+                                <div class="text-sm font-bold text-gray-700">Finanzas<br>& Operac.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vinculación Laboral Timeline -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center md:text-left">Plan de Vinculación Laboral</h3>
+                
+                <div class="relative py-4">
+                    <div class="timeline-line"></div>
+
+                    <!-- Phase 1 -->
+                    <div class="relative flex flex-col md:flex-row items-center mb-12 w-full">
+                        <div class="w-full md:w-1/2 flex justify-end md:pr-12 mb-4 md:mb-0">
+                            <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-brand-500 w-full max-w-md relative z-10">
+                                <span class="bg-brand-100 text-brand-800 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Meses 1 - 8</span>
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">Fase MVP / Piloto</h4>
+                                <ul class="text-sm text-gray-600 space-y-2">
+                                    <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Modalidad:</strong> Socios fundadores (Equity).</li>
+                                    <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Remuneración:</strong> Sin sueldo fijo (Ad Honorem).</li>
+                                    <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Dedicación:</strong> Compatible con estudios universitarios.</li>
+                                    <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Objetivo:</strong> Reducir costos fijos durante la validación.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="absolute left-12 md:left-1/2 transform -translate-x-1/2 w-8 h-8 bg-brand-500 rounded-full border-4 border-white shadow flex items-center justify-center z-10">
+                            <div class="w-2 h-2 bg-white rounded-full"></div>
+                        </div>
+                        <div class="w-full md:w-1/2 pl-12 md:pl-12 hidden md:block">
+                            <!-- Empty space for layout -->
+                        </div>
+                    </div>
+
+                    <!-- Phase 2 -->
+                    <div class="relative flex flex-col md:flex-row items-center w-full">
+                        <div class="w-full md:w-1/2 pr-12 hidden md:block">
+                            <!-- Empty space for layout -->
+                        </div>
+                        <div class="absolute left-12 md:left-1/2 transform -translate-x-1/2 w-8 h-8 bg-emerald-500 rounded-full border-4 border-white shadow flex items-center justify-center z-10">
+                            <i class="fas fa-rocket text-white text-xs"></i>
+                        </div>
+                        <div class="w-full md:w-1/2 flex justify-start md:pl-12">
+                            <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-emerald-500 w-full max-w-md relative z-10">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Mes 8 - 12+</span>
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">Fase de Escalamiento</h4>
+                                <ul class="text-sm text-gray-600 space-y-2">
+                                    <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Punto de quiebre:</strong> Flujo de caja positivo.</li>
+                                    <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Régimen:</strong> MYPE (Micro y Pequeña Empresa).</li>
+                                    <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Terceros:</strong> Recibos por Honorarios (RH) para tareas puntuales.</li>
+                                    <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Evolución:</strong> Contratación progresiva por áreas funcionales.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: PRESUPUESTO SALARIAL -->
+        <section id="finanzas" class="tab-content">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-gray-800 mb-3">Estimación Salarial Inicial</h3>
+                <p class="text-gray-500 max-w-2xl mx-auto">Honorarios referenciales financiados con los ingresos por comisión, aplicables únicamente a partir del alcance del punto de equilibrio.</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8 items-start">
+                <!-- Table -->
+                <div class="w-full lg:w-2/3 bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 text-gray-600 border-b border-gray-200">
+                                    <th class="py-4 px-6 font-semibold">Rol</th>
+                                    <th class="py-4 px-6 font-semibold">Dedicación</th>
+                                    <th class="py-4 px-6 font-semibold text-right">Honorario Mensual</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="py-4 px-6 text-gray-800 font-medium">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center"><i class="fas fa-user-tie text-xs"></i></div>
+                                            Gerente General
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6 text-gray-600">Parcial (part-time)</td>
+                                    <td class="py-4 px-6 text-right font-semibold text-gray-800">S/ 900.00</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="py-4 px-6 text-gray-800 font-medium">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center"><i class="fas fa-microchip text-xs"></i></div>
+                                            Líder de Hardware e IoT
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6 text-gray-600">Parcial (part-time)</td>
+                                    <td class="py-4 px-6 text-right font-semibold text-gray-800">S/ 800.00</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="py-4 px-6 text-gray-800 font-medium">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class="fas fa-mobile-screen text-xs"></i></div>
+                                            Líder de Dev. de Software
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6 text-gray-600">Parcial (part-time)</td>
+                                    <td class="py-4 px-6 text-right font-semibold text-gray-800">S/ 800.00</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="py-4 px-6 text-gray-800 font-medium">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center"><i class="fas fa-bullhorn text-xs"></i></div>
+                                            Resp. de Marketing
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6 text-gray-600">Parcial (part-time)</td>
+                                    <td class="py-4 px-6 text-right font-semibold text-gray-800">S/ 700.00</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="py-4 px-6 text-gray-800 font-medium">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center"><i class="fas fa-chart-line text-xs"></i></div>
+                                            Resp. de Finanzas
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6 text-gray-600">Parcial (part-time)</td>
+                                    <td class="py-4 px-6 text-right font-semibold text-gray-800">S/ 700.00</td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="bg-gray-800 text-white">
+                                <tr>
+                                    <td colspan="2" class="py-4 px-6 font-bold text-right">Total mensual estimado:</td>
+                                    <td class="py-4 px-6 font-bold text-right text-lg">S/ 3,900.00</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Chart -->
+                <div class="w-full lg:w-1/3 bg-white p-6 rounded-2xl shadow-md border border-gray-100 flex flex-col items-center justify-center">
+                    <h4 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Distribución del Presupuesto</h4>
+                    <div class="relative w-full aspect-square max-w-[280px]">
+                        <canvas id="salaryChart"></canvas>
+                        <!-- Center text -->
+                        <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                            <span class="text-xs text-gray-400">Total</span>
+                            <span class="text-xl font-bold text-gray-800">S/3.9k</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-auto py-8">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm">
+                &copy; 2026 SmartPark Cusco. Documento confidencial para fines de planificación y evaluación.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        let chartInitialized = false;
+
+        function openTab(tabId, btn) {
+            // Hide all tabs
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Reset all buttons styling
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => {
+                button.classList.remove('text-brand-600', 'bg-brand-50', 'shadow-sm');
+                button.classList.add('text-gray-500', 'hover:bg-gray-50');
+            });
+
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+
+            // Style selected button
+            if(btn) {
+                btn.classList.remove('text-gray-500', 'hover:bg-gray-50');
+                btn.classList.add('text-brand-600', 'bg-brand-50', 'shadow-sm');
+            }
+
+            // Initialize chart only when Finanzas tab is opened to ensure canvas has dimensions
+            if(tabId === 'finanzas' && !chartInitialized) {
+                initChart();
+                chartInitialized = true;
+            }
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('salaryChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Gerencia', 'Hardware', 'Software', 'Marketing', 'Finanzas'],
+                    datasets: [{
+                        data: [900, 800, 800, 700, 700],
+                        backgroundColor: [
+                            '#3b82f6', // brand (blue)
+                            '#f59e0b', // amber
+                            '#10b981', // emerald
+                            '#a855f7', // purple
+                            '#f43f5e'  // rose
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    family: "'Inter', sans-serif",
+                                    size: 11
+                                },
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(context.parsed);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
